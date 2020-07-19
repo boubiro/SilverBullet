@@ -16,6 +16,9 @@ Found a bug? [Create an issue!](https://help.github.com/en/articles/creating-an-
 3. **Build** the solution (Visual Studio will fetch all the missing nuget packages).
 4. You can find the executables inside the folders OpenBullet/bin/Release and OpenBulletCLI/bin/Release.
 
+# Required
+0. C++ 2015 Redistributable
+
 # License
 This software is licensed under the MIT License.
 
