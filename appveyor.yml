@@ -1,0 +1,35 @@
+version: 1.2.2#{build}
+image: Visual Studio 2017
+platform: Any CPU
+skip_tags: true
+configuration: Release
+install:
+- cmd: >-
+    cd %APPVEYOR_BUILD_FOLDER%
+
+    git submodule update --init --recursive
+
+    nuget restore OpenBullet.sln
+before_build:
+  - ps: ${env:REV} = (git rev-list --count HEAD)
+build:
+  verbosity: normal
+after_build:
+- cmd: >-
+    move %APPVEYOR_BUILD_FOLDER%\openbullet\bin\release\chromedriver.exe %APPVEYOR_BUILD_FOLDER%\openbullet\bin\release\bin\
+
+    move %APPVEYOR_BUILD_FOLDER%\openbullet\bin\release\geckodriver.exe %APPVEYOR_BUILD_FOLDER%\openbullet\bin\release\bin\
+
+    7z a OpenBullet.zip %APPVEYOR_BUILD_FOLDER%\openbullet\bin\release\
+artifacts:
+- path: OpenBullet.zip
+  name: OpenBullet
+deploy:  
+  - provider: GitHub
+    artifact: /.*\.zip/
+    tag: 1.2.2#$(REV)
+    force_update: true
+    auth_token:
+        secure: ggc65D/J7litzhVL38h+ek4STOytVbOmx2UP3xYFEZVg0Py8ajPGHlklknuFI6Bj
+    on:
+      branch: master

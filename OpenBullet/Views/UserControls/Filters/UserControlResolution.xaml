@@ -1,0 +1,40 @@
+﻿<UserControl
+    x:Class="OpenBullet.Views.UserControls.Filters.UserControlResolution"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OpenBullet.Views.UserControls.Filters"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Initialized="UserControl_Initialized"
+    mc:Ignorable="d">
+    <StackPanel>
+        <Label Content="Horizontal:" />
+        <xctk:IntegerUpDown
+            Name="HorizontalNumeric"
+            Height="23"
+            Background="{DynamicResource BackgroundMain}"
+            FontSize="14"
+            Foreground="{DynamicResource ForegroundMain}"
+            TextAlignment="Center"
+            TextBoxBase.TextChanged="TextBox_TextChanged"
+            Value="0" />
+        <Label Content="Vertical:" />
+        <xctk:IntegerUpDown
+            Name="VerticalNumeric"
+            Height="23"
+            Background="{DynamicResource BackgroundMain}"
+            FontSize="14"
+            Foreground="{DynamicResource ForegroundMain}"
+            TextAlignment="Center"
+            TextBoxBase.TextChanged="TextBox_TextChanged"
+            Value="0" />
+        <Label Content="Unit:" />
+        <ComboBox
+            Name="UnitComboBox"
+            SelectedIndex="0"
+            SelectionChanged="ComboBox_SelectionChanged" />
+    </StackPanel>
+</UserControl>

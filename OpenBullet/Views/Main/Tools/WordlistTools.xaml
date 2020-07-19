@@ -1,0 +1,111 @@
+﻿<Page
+    x:Class="OpenBullet.Views.Main.Tools.WordlistTools"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OpenBullet.Views.Main.Tools"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WordlistTools"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Grid>
+        <StackPanel>
+            <!--<GroupBox
+                Margin="0,5,5,5"
+                HorizontalAlignment="Left"
+                Header="Set Wordlists">
+                <Grid>
+                    <StackPanel>
+                        <DockPanel>
+                            <Button
+                                MinWidth="47"
+                                HorizontalAlignment="Right">
+                                Load Wordlist
+                            </Button>
+                            <Button HorizontalAlignment="Right">
+                                Remove wordlist
+                            </Button>
+                            <Button HorizontalAlignment="Right">
+                                Clear
+                            </Button>
+                            <Button HorizontalAlignment="Right">
+                                Send To Wordlists
+                            </Button>
+                        </DockPanel>
+                        <ListBox
+                            Name="wordlistBox"
+                            MinHeight="80" />
+                        <TextBlock
+                            Margin="0,5,0,0"
+                            Text="{Binding ElementName=wordlistBox, Path=Items.Count, StringFormat='Wordlist Count: {0}'}" />
+
+                    </StackPanel>
+                </Grid>
+            </GroupBox>-->
+            <GroupBox
+                Margin="0,5,5,5"
+                HorizontalAlignment="Left"
+                Header="Remove Duplicate">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <DockPanel>
+                            <Label Content="Location:" />
+                            <TextBox
+                                Name="locationTextBox"
+                                Width="260"
+                                IsReadOnly="True" />
+                            <Button
+                                Click="Button_Click"
+                                Content="Load" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock
+                                Name="loadedForDup"
+                                Margin="0,8,0,0"
+                                Text="Loaded: 0" />
+                            <Button
+                                Width="47"
+                                HorizontalAlignment="Right"
+                                Click="Button_Click_2">
+                                Start
+                            </Button>
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock
+                                x:Name="removedDupTextBlock"
+                                Text="Removed: 0" />
+                            <Button
+                                Width="47"
+                                HorizontalAlignment="Right"
+                                Click="Button_Click_4">
+                                Save
+                            </Button>
+                        </DockPanel>
+                        <Button
+                            HorizontalAlignment="Right"
+                            Click="Button_Click_3">
+                            Clear
+                        </Button>
+                        <Button
+                            Width="116"
+                            Margin="0,-30,0,0"
+                            HorizontalAlignment="Left"
+                            Click="Button_Click_1">
+                            Send into wordlist
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Page>

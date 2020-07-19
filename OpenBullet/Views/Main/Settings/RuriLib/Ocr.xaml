@@ -1,0 +1,160 @@
+﻿<Page
+    x:Class="OpenBullet.Views.Main.Settings.RL.Ocr"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:tesseract="clr-namespace:Tesseract;assembly=Tesseract"
+    Title="Ocr"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ObjectDataProvider
+            x:Key="dataFromEngineMode"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="tesseract:EngineMode" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="dataFromPageSegmentMode"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="tesseract:PageSegMode" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="dataFromPageIteratorLevel"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="tesseract:PageIteratorLevel" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Page.Resources>
+
+    <StackPanel HorizontalAlignment="Left">
+        <Grid
+            Grid.RowSpan="3"
+            Grid.Column="1"
+            Width="500"
+            Margin="10,5,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label
+                    HorizontalAlignment="Left"
+                    Content="Variable Name:" />
+                <TextBox
+                    Name="varName"
+                    Grid.Column="1"
+                    Margin="2,0,0,0"
+                    Text="{Binding VariableName, Mode=TwoWay}" />
+
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label
+                    HorizontalAlignment="Left"
+                    Content="Variable Value:" />
+                <TextBox
+                    Name="varValue"
+                    Grid.Column="1"
+                    Margin="5,0,0,0"
+                    Text="{Binding VariableValue, Mode=TwoWay}" />
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label
+                    HorizontalAlignment="Left"
+                    Content="Value Type:" />
+                <ComboBox
+                    Name="varValueType"
+                    Grid.Column="1"
+                    Margin="23,0,0,0"
+                    SelectedIndex="0" />
+            </Grid>
+            <Grid
+                Grid.Row="3"
+                Margin="0,2,0,7">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <ListBox
+                    x:Name="variableLB"
+                    MaxHeight="150"
+                    Background="{DynamicResource BackgroundSecondary}"
+                    FontFamily="Consolas"
+                    Foreground="{DynamicResource ForegroundMain}"
+                    ItemsSource="{Binding VariableList}">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Click="MenuItem_Click">Copy</MenuItem>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                </ListBox>
+                <StackPanel Grid.Column="1">
+                    <Button
+                        Name="btnVariableAdd"
+                        Width="62"
+                        HorizontalAlignment="Right"
+                        Click="btnVariableAdd_Click">
+                        Add
+                    </Button>
+                    <Button
+                        Name="btnVariableUp"
+                        Click="btnVariableUp_Click"
+                        Content="Up" />
+                    <Button
+                        Name="btnVariableDown"
+                        Click="btnVariableDown_Click"
+                        Content="Down" />
+                    <Button
+                        Name="btnVariableRemove"
+                        Click="btnVariableRemove_Click"
+                        Content="Remove" />
+                    <Button
+                        Name="btnVariableClear"
+                        Click="btnVariableClear_Click"
+                        Content="Clear" />
+                </StackPanel>
+                <TextBlock
+                    Grid.Row="1"
+                    Margin="0,4,0,0"
+                    Foreground="{DynamicResource ForegroundMain}"
+                    Text="{Binding Path=VariableList.Count, StringFormat='Variable Count: {0}'}" />
+            </Grid>
+        </Grid>
+        <CheckBox
+            Margin="0,18,0,0"
+            Padding="0"
+            HorizontalAlignment="Left"
+            Content="Save Image To Captchas Folder"
+            IsChecked="{Binding SaveImageToCaptchasFolder}" />
+    </StackPanel>
+
+</Page>

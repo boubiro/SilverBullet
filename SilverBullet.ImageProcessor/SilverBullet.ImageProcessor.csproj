@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0A8B141B-E5F3-4F7F-BA88-183668361B42}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SilverBullet.ImageProcessor</RootNamespace>
+    <AssemblyName>SilverBullet.ImageProcessor</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="OpenCvSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenCvSharp4.4.3.0.20200701\lib\net461\OpenCvSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp.Blob, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenCvSharp4.4.3.0.20200701\lib\net461\OpenCvSharp.Blob.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenCvSharp4.4.3.0.20200701\lib\net461\OpenCvSharp.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BitDepth.cs" />
+    <Compile Include="Common\Exceptions\ImageFormatException.cs" />
+    <Compile Include="Common\Exceptions\ImageProcessingException.cs" />
+    <Compile Include="Common\Exceptions\Logging\DefaultLogger.cs" />
+    <Compile Include="Common\Exceptions\Logging\ILogger.cs" />
+    <Compile Include="Common\Exceptions\QuantizationException.cs" />
+    <Compile Include="Common\Extensions\AssemblyExtensions.cs" />
+    <Compile Include="Common\Extensions\DoubleExtensions.cs" />
+    <Compile Include="Common\Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Common\Extensions\FloatExtensions.cs" />
+    <Compile Include="Common\Extensions\ImageExtensions.cs" />
+    <Compile Include="Common\Extensions\IntegerExtensions.cs" />
+    <Compile Include="Common\Extensions\RectangleExtensions.cs" />
+    <Compile Include="Common\Helpers\IOHelper.cs" />
+    <Compile Include="Common\Helpers\TypeFinder.cs" />
+    <Compile Include="Common\Helpers\UpgradeableReadLock.cs" />
+    <Compile Include="Common\Helpers\WriteLock.cs" />
+    <Compile Include="Configuration\ImageProcessorBootstrapper.cs" />
+    <Compile Include="Configuration\NativeBinaryFactory.cs" />
+    <Compile Include="Configuration\NativeMethods.cs" />
+    <Compile Include="ImageFactory.cs" />
+    <Compile Include="Imaging\AnchorPosition.cs" />
+    <Compile Include="Imaging\AnimationProcessMode.cs" />
+    <Compile Include="Imaging\Colors\CmykColor.cs" />
+    <Compile Include="Imaging\Colors\Color32.cs" />
+    <Compile Include="Imaging\Colors\ColorExtensions.cs" />
+    <Compile Include="Imaging\Colors\HSLAColor.cs" />
+    <Compile Include="Imaging\Colors\RGBAColor.cs" />
+    <Compile Include="Imaging\Colors\RgbaComponent.cs" />
+    <Compile Include="Imaging\Colors\YCbCrColor.cs" />
+    <Compile Include="Imaging\ComputerArchitectureInfo.cs" />
+    <Compile Include="Imaging\ConvMatrix.cs" />
+    <Compile Include="Imaging\Convolution.cs" />
+    <Compile Include="Imaging\CropLayer.cs" />
+    <Compile Include="Imaging\CropMode.cs" />
+    <Compile Include="Imaging\FastBitmap.cs" />
+    <Compile Include="Imaging\Filters\Artistic\HalftoneFilter.cs" />
+    <Compile Include="Imaging\Filters\Artistic\OilPaintingFilter.cs" />
+    <Compile Include="Imaging\Filters\Binarization\BinaryThreshold.cs" />
+    <Compile Include="Imaging\Filters\EdgeDetection\ConvolutionFilter.cs" />
+    <Compile Include="Imaging\Filters\EdgeDetection\I2DEdgeFilter.cs" />
+    <Compile Include="Imaging\Filters\EdgeDetection\IEdgeFilter.cs" />
+    <Compile Include="Imaging\Filters\EdgeDetection\KayyaliEdgeFilter.cs" />
+    <Compile Include="Imaging\Filters\EdgeDetection\KirschEdgeFilter.cs" />
+    <Compile Include="Imaging\Filters\EdgeDetection\Laplacian3X3EdgeFilter.cs" />
+    <Compile Include="Imaging\Filters\EdgeDetection\Laplacian5X5EdgeFilter.cs" />
+    <Compile Include="Imaging\Filters\EdgeDetection\LaplacianOfGaussianEdgeFilter.cs" />
+    <Compile Include="Imaging\Filters\EdgeDetection\PrewittEdgeFilter.cs" />
+    <Compile Include="Imaging\Filters\EdgeDetection\RobertsCrossEdgeFilter.cs" />
+    <Compile Include="Imaging\Filters\EdgeDetection\ScharrEdgeFilter.cs" />
+    <Compile Include="Imaging\Filters\EdgeDetection\SobelEdgeFilter.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\Class1.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\EmbeddedHaarCascades.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\GroupMatching.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\HaarCascade\HaarCascade.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\HaarCascade\HaarCascadeSerializationObject.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\HaarCascade\HaarCascadeStage.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\HaarCascade\HaarCascadeWriter.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\HaarCascade\HaarClassifier.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\HaarCascade\HaarFeature.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\HaarCascade\HaarFeatureNode.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\HaarCascade\HaarRectangle.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\HaarObjectDetector.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\ObjectDetectorScalingMode.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\ObjectDetectorSearchMode.cs" />
+    <Compile Include="Imaging\Filters\ObjectDetection\RectangleGroupMatching.cs" />
+    <Compile Include="Imaging\Filters\Photo\BlackWhiteMatrixFilter.cs" />
+    <Compile Include="Imaging\Filters\Photo\ColorMatrixes.cs" />
+    <Compile Include="Imaging\Filters\Photo\ComicMatrixFilter.cs" />
+    <Compile Include="Imaging\Filters\Photo\GothamMatrixFilter.cs" />
+    <Compile Include="Imaging\Filters\Photo\GreyScaleMatrixFilter.cs" />
+    <Compile Include="Imaging\Filters\Photo\HiSatchMatrixFilter.cs" />
+    <Compile Include="Imaging\Filters\Photo\IMatrixFilter.cs" />
+    <Compile Include="Imaging\Filters\Photo\InvertMatrixFilter.cs" />
+    <Compile Include="Imaging\Filters\Photo\LomographMatrixFilter.cs" />
+    <Compile Include="Imaging\Filters\Photo\LoSatchMatrixFilter.cs" />
+    <Compile Include="Imaging\Filters\Photo\MatrixFilterBase.cs" />
+    <Compile Include="Imaging\Filters\Photo\MatrixFilters.cs" />
+    <Compile Include="Imaging\Filters\Photo\PolaroidMatrixFilter.cs" />
+    <Compile Include="Imaging\Filters\Photo\SepiaMatrixFilter.cs" />
+    <Compile Include="Imaging\Formats\BitmapFormat.cs" />
+    <Compile Include="Imaging\Formats\FormatBase.cs" />
+    <Compile Include="Imaging\Formats\FormatUtilities.cs" />
+    <Compile Include="Imaging\Formats\GifDecoder.cs" />
+    <Compile Include="Imaging\Formats\GifEncoder.cs" />
+    <Compile Include="Imaging\Formats\GifFormat.cs" />
+    <Compile Include="Imaging\Formats\GifFrame.cs" />
+    <Compile Include="Imaging\Formats\IAnimatedImageFormat.cs" />
+    <Compile Include="Imaging\Formats\IQuantizableImageFormat.cs" />
+    <Compile Include="Imaging\Formats\ISupportedImageFormat.cs" />
+    <Compile Include="Imaging\Formats\JpegFormat.cs" />
+    <Compile Include="Imaging\Formats\PngFormat.cs" />
+    <Compile Include="Imaging\Formats\TiffFormat.cs" />
+    <Compile Include="Imaging\GaussianLayer.cs" />
+    <Compile Include="Imaging\Helpers\Adjustments.cs" />
+    <Compile Include="Imaging\Helpers\Converters\BigEndianBitConverter.cs" />
+    <Compile Include="Imaging\Helpers\Converters\EndianBitConverter.cs" />
+    <Compile Include="Imaging\Helpers\Converters\Endianness.cs" />
+    <Compile Include="Imaging\Helpers\Converters\ImageConverter.cs" />
+    <Compile Include="Imaging\Helpers\Converters\LittleEndianBitConverter.cs" />
+    <Compile Include="Imaging\Helpers\Effects.cs" />
+    <Compile Include="Imaging\Helpers\GraphicsHelper.cs" />
+    <Compile Include="Imaging\Helpers\ImageHelper.cs" />
+    <Compile Include="Imaging\Helpers\ImageMaths.cs" />
+    <Compile Include="Imaging\Helpers\PixelOperations.cs" />
+    <Compile Include="Imaging\IComputerArchitectureInfo.cs" />
+    <Compile Include="Imaging\ImageLayer.cs" />
+    <Compile Include="Imaging\Interpolation.cs" />
+    <Compile Include="Imaging\MetaData\ExifBitConverter.cs" />
+    <Compile Include="Imaging\MetaData\ExifPropertyTag.cs" />
+    <Compile Include="Imaging\MetaData\ExifPropertyTagConstants.cs" />
+    <Compile Include="Imaging\MetaData\ExifPropertyTagType.cs" />
+    <Compile Include="Imaging\MetaData\ImageFactoryMetaExtensions.cs" />
+    <Compile Include="Imaging\MetaData\Int32Converter.cs" />
+    <Compile Include="Imaging\MetaData\PropertyTagResolutionUnit.cs" />
+    <Compile Include="Imaging\MetaData\Rational.cs" />
+    <Compile Include="Imaging\Quantizers\IQuantizer.cs" />
+    <Compile Include="Imaging\Quantizers\OctreeQuantizer.cs" />
+    <Compile Include="Imaging\Quantizers\Quantizer.cs" />
+    <Compile Include="Imaging\Quantizers\WuQuantizer\Box.cs" />
+    <Compile Include="Imaging\Quantizers\WuQuantizer\ColorMoment.cs" />
+    <Compile Include="Imaging\Quantizers\WuQuantizer\CubeCut.cs" />
+    <Compile Include="Imaging\Quantizers\WuQuantizer\Histogram.cs" />
+    <Compile Include="Imaging\Quantizers\WuQuantizer\ImageBuffer.cs" />
+    <Compile Include="Imaging\Quantizers\WuQuantizer\IWuQuantizer.cs" />
+    <Compile Include="Imaging\Quantizers\WuQuantizer\PaletteColorHistory.cs" />
+    <Compile Include="Imaging\Quantizers\WuQuantizer\PaletteLookup.cs" />
+    <Compile Include="Imaging\Quantizers\WuQuantizer\WuQuantizer.cs" />
+    <Compile Include="Imaging\Quantizers\WuQuantizer\WuQuantizerBase.cs" />
+    <Compile Include="Imaging\ResizeHelper.cs" />
+    <Compile Include="Imaging\ResizeLayer.cs" />
+    <Compile Include="Imaging\ResizeMode.cs" />
+    <Compile Include="Imaging\Resizer.cs" />
+    <Compile Include="Imaging\RoundedCornerLayer.cs" />
+    <Compile Include="Imaging\TextLayer.cs" />
+    <Compile Include="Layers\AdaptiveThresholdLayer.cs" />
+    <Compile Include="Layers\ColorSubstitutionLayer.cs" />
+    <Compile Include="Layers\CvtColorLayer.cs" />
+    <Compile Include="Layers\FastNlMeansDenoisingColoredLayer.cs" />
+    <Compile Include="Layers\HueLayer.cs" />
+    <Compile Include="Layers\MorphologyLayer.cs" />
+    <Compile Include="Layers\PixelateLayer.cs" />
+    <Compile Include="Layers\ReplaceColorLayer.cs" />
+    <Compile Include="Layers\ResolutionLayer.cs" />
+    <Compile Include="Layers\ThresholdLayer.cs" />
+    <Compile Include="Layers\ZoomLayer.cs" />
+    <Compile Include="LockBitmap.cs" />
+    <Compile Include="MetaDataMode.cs" />
+    <Compile Include="PixelFormatConvert.cs" />
+    <Compile Include="Processors\AdaptiveThreshold.cs" />
+    <Compile Include="Processors\Alignment.cs" />
+    <Compile Include="Processors\Alpha.cs" />
+    <Compile Include="Processors\Atomization.cs" />
+    <Compile Include="Processors\AutoRotate.cs" />
+    <Compile Include="Processors\Background.cs" />
+    <Compile Include="Processors\BackgroundColor.cs" />
+    <Compile Include="Processors\Blur.cs" />
+    <Compile Include="Processors\Brightness.cs" />
+    <Compile Include="Processors\CMatrix.cs" />
+    <Compile Include="Processors\ColorThreshold.cs" />
+    <Compile Include="Processors\Contrast.cs" />
+    <Compile Include="Processors\ContrastEx.cs" />
+    <Compile Include="Processors\Crop.cs" />
+    <Compile Include="Processors\DetectEdges.cs" />
+    <Compile Include="Processors\DetectObjects.cs" />
+    <Compile Include="Processors\Embossment.cs" />
+    <Compile Include="Processors\EntropyCrop.cs" />
+    <Compile Include="Processors\Expend.cs" />
+    <Compile Include="Processors\FaceWhiten.cs" />
+    <Compile Include="Processors\FastNlMeansDenoisingColored.cs" />
+    <Compile Include="Processors\Filter.cs" />
+    <Compile Include="Processors\Flip.cs" />
+    <Compile Include="Processors\Format.cs" />
+    <Compile Include="Processors\Gamma.cs" />
+    <Compile Include="Processors\GaussianBlur.cs" />
+    <Compile Include="Processors\GaussianSharpen.cs" />
+    <Compile Include="Processors\Grayscale.cs" />
+    <Compile Include="Processors\Halftone.cs" />
+    <Compile Include="Processors\Hue.cs" />
+    <Compile Include="Processors\IGraphicsProcessor.cs" />
+    <Compile Include="Processors\Invert.cs" />
+    <Compile Include="Processors\MakeTransparent.cs" />
+    <Compile Include="Processors\Mask.cs" />
+    <Compile Include="Processors\Mean.cs" />
+    <Compile Include="Processors\Median.cs" />
+    <Compile Include="Processors\Meta.cs" />
+    <Compile Include="Processors\MorphologyEx.cs" />
+    <Compile Include="Processors\Overlay.cs" />
+    <Compile Include="Processors\Pixelate.cs" />
+    <Compile Include="Processors\Quality.cs" />
+    <Compile Include="Processors\ReduceNoise.cs" />
+    <Compile Include="Processors\ReplaceColor.cs" />
+    <Compile Include="Processors\Resize.cs" />
+    <Compile Include="Processors\ResizeEx.cs" />
+    <Compile Include="Processors\Resolution.cs" />
+    <Compile Include="Processors\Rotate.cs" />
+    <Compile Include="Processors\RotateBounded.cs" />
+    <Compile Include="Processors\RoundedCorners.cs" />
+    <Compile Include="Processors\Saturation.cs" />
+    <Compile Include="Processors\SepiaTone.cs" />
+    <Compile Include="Processors\Sharpen.cs" />
+    <Compile Include="Processors\Smooth.cs" />
+    <Compile Include="Processors\Soften.cs" />
+    <Compile Include="Processors\ThresholdEx.cs" />
+    <Compile Include="Processors\Tint.cs" />
+    <Compile Include="Processors\Transparency.cs" />
+    <Compile Include="Processors\Vignette.cs" />
+    <Compile Include="Processors\Watermark.cs" />
+    <Compile Include="Processors\Zoom.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="stylecop.json" />
+    <None Include="stylecop1.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Imaging\Filters\ObjectDetection\Resources\haarcascade_frontalface_alt.xml" />
+    <Content Include="Imaging\Filters\ObjectDetection\Resources\haarcascade_frontalface_default.xml" />
+    <Content Include="Imaging\Filters\ObjectDetection\Resources\haarcascade_frontalface_legacy.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

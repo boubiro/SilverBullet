@@ -1,0 +1,27 @@
+﻿<UserControl
+    x:Class="OpenBullet.Views.UserControls.Filters.UserControlReplaceColor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <StackPanel>
+        <Label Content="Target:" />
+        <TextBox
+            Name="TargetTextBox"
+            Text="0,0,0"
+            TextChanged="TextBox_TextChanged" />
+        <Label Content="Replacement:" />
+        <TextBox
+            Name="ReplacementTextBox"
+            Text="0,0,0"
+            TextChanged="TextBox_TextChanged" />
+        <Label Content="Fuzziness:" />
+        <TextBox
+            Name="FuzzinessTextBox"
+            Text="0"
+            TextChanged="TextBox_TextChanged" />
+    </StackPanel>
+</UserControl>

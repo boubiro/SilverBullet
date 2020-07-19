@@ -1,0 +1,1382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.props" Condition="Exists('..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.props')" />
+  <Import Project="..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.props" Condition="Exists('..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.props')" />
+  <Import Project="..\packages\cef.redist.x86.83.4.2\build\cef.redist.x86.props" Condition="Exists('..\packages\cef.redist.x86.83.4.2\build\cef.redist.x86.props')" />
+  <Import Project="..\packages\cef.redist.x64.83.4.2\build\cef.redist.x64.props" Condition="Exists('..\packages\cef.redist.x64.83.4.2\build\cef.redist.x64.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <CefSharpAnyCpuSupport>true</CefSharpAnyCpuSupport>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{99E40E7F-00A4-4FB1-9441-B05A56C47C08}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>OpenBullet</RootNamespace>
+    <AssemblyName>SilverBullet</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowedReferenceRelatedFileExtensions>
+      <!-- Prevent default XML and PDB files copied to output in RELEASE. 
+           Only *.allowedextension files will be included, which doesn't exist in my case.
+       -->
+      .allowedextension
+    </AllowedReferenceRelatedFileExtensions>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\SilverBullet Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AngleSharp, Version=0.14.0.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
+      <HintPath>..\packages\AngleSharp.0.14.0\lib\net472\AngleSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CaptchaSharp, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CaptchaSharp.1.0.4\lib\netstandard2.0\CaptchaSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CaptchaSharp.Services.More, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CaptchaSharp.Services.More.1.0.0\lib\netstandard2.0\CaptchaSharp.Services.More.dll</HintPath>
+    </Reference>
+    <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="Extreme.Net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Extreme.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=6.0.1.278, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvalonEdit.6.0.1\lib\net45\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython, Version=2.7.9.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.9\lib\net45\IronPython.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Modules, Version=2.7.9.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.9\lib\net45\IronPython.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.SQLite, Version=2.7.9.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.9\lib\net45\IronPython.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Wpf, Version=2.7.9.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.9\lib\net45\IronPython.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
+    </Reference>
+    <Reference Include="Magick.NET.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\Magick.NET.Core.2.0.0\lib\net40\Magick.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.Modern.4.3.0\lib\net47\MahApps.Metro.IconPacks.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.FontAwesome, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.FontAwesome.4.2.0\lib\net47\MahApps.Metro.IconPacks.FontAwesome.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.Ionicons, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.Ionicons.4.2.0\lib\net47\MahApps.Metro.IconPacks.Ionicons.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.Material, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.Material.4.2.0\lib\net47\MahApps.Metro.IconPacks.Material.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.MaterialDesign, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.MaterialDesign.4.2.0\lib\net47\MahApps.Metro.IconPacks.MaterialDesign.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.Microns, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.Microns.4.2.0\lib\net47\MahApps.Metro.IconPacks.Microns.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.Modern, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.Modern.4.3.0\lib\net47\MahApps.Metro.IconPacks.Modern.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.Unicons, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.Unicons.4.3.0\lib\net47\MahApps.Metro.IconPacks.Unicons.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.IconPacks.Zondicons, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.Zondicons.4.2.0\lib\net47\MahApps.Metro.IconPacks.Zondicons.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic, Version=1.2.2.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicLanguageRuntime.1.2.2\lib\net45\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.2.2.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicLanguageRuntime.1.2.2\lib\net45\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Metadata, Version=1.2.2.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicLanguageRuntime.1.2.2\lib\net45\Microsoft.Scripting.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenCvSharp4.4.3.0.20200524\lib\net461\OpenCvSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp.Blob, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenCvSharp4.4.3.0.20200524\lib\net461\OpenCvSharp.Blob.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenCvSharp4.4.3.0.20200524\lib\net461\OpenCvSharp.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.2\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.4.7.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.Themes.MetroDark.Wpf.1.0.0\lib\net40\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.Themes.MetroDark.Wpf.1.0.0\lib\net40\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.3.141.0\lib\net45\WebDriver.Support.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Infragistics.Themes.MetroDark.Wpf.1.0.0\lib\net40\WPFToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.8.1\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.8.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.8.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.8.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.8.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.Wpf, Version=83.4.20, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <!--<HintPath>..\packages\CefSharp.Wpf.41.0.0\CefSharp\x64\CefSharp.Wpf.dll</HintPath>-->
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Alerter.cs" />
+    <Compile Include="AvalonEdit\Search\ISearchStrategy.cs" />
+    <Compile Include="AvalonEdit\Search\RegexSearchStrategy.cs" />
+    <Compile Include="AvalonEdit\Search\SearchTextEditor.cs" />
+    <Compile Include="AvalonEdit\Search\SearchResultBackgroundRenderer.cs" />
+    <Compile Include="AvalonEdit\Search\SearchStrategyFactory.cs" />
+    <Compile Include="AvalonEdit\TruncateLongLines.cs" />
+    <Compile Include="CefSharp\MenuHandler.cs" />
+    <Compile Include="CheckUpdate.cs" />
+    <Compile Include="Converters\BooleanBrushConverter.cs" />
+    <Compile Include="Converters\EnumBooleanConverter.cs" />
+    <Compile Include="Converters\KeychainBrushConverter.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Models\ControlText.cs" />
+    <Compile Include="Models\Source.cs" />
+    <Compile Include="NotesWindow.xaml.cs">
+      <DependentUpon>NotesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SB.cs" />
+    <Compile Include="OBIOManager.cs" />
+    <Compile Include="LoggerViewModel.cs" />
+    <Compile Include="LogWindow.xaml.cs">
+      <DependentUpon>LogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OpenBulletApp.cs" />
+    <Compile Include="Plugins\Build.cs" />
+    <Compile Include="Plugins\Check.cs" />
+    <Compile Include="Plugins\IControl.cs" />
+    <Compile Include="Plugins\Loader.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="Views\Dialogs\DialogLSDoc.xaml.cs">
+      <DependentUpon>DialogLSDoc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\DialogSelectBots.xaml.cs">
+      <DependentUpon>DialogSelectBots.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\DialogSetProxies.xaml.cs">
+      <DependentUpon>DialogSetProxies.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\FindReplaceDialog.xaml.cs">
+      <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Configs\ConfigOcrSettings.xaml.cs">
+      <DependentUpon>ConfigOcrSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Configs\OtherOptions\Requests.xaml.cs">
+      <DependentUpon>Requests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Configs\OtherOptions\Selenium.xaml.cs">
+      <DependentUpon>Selenium.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\DialogShowLog.xaml.cs">
+      <DependentUpon>DialogShowLog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoadingWindow.xaml.cs">
+      <DependentUpon>LoadingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\PluginsSection.xaml.cs">
+      <DependentUpon>PluginsSection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\ReleaseNotesPage.xaml.cs">
+      <DependentUpon>ReleaseNotesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Settings\RuriLib\Ocr.xaml.cs">
+      <DependentUpon>Ocr.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Support.xaml.cs">
+      <DependentUpon>Support.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Tools\TessDataDownloads.xaml.cs">
+      <DependentUpon>TessDataDownloads.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Tools\WordlistTools.xaml.cs">
+      <DependentUpon>WordlistTools.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageBlockOcr.xaml.cs">
+      <DependentUpon>PageBlockOcr.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageBlockReportCaptcha.xaml.cs">
+      <DependentUpon>PageBlockReportCaptcha.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageBlockSolveCaptcha.xaml.cs">
+      <DependentUpon>PageBlockSolveCaptcha.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageBlockSpeechToText.xaml.cs">
+      <DependentUpon>PageBlockSpeechToText.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\ButtonContainer.xaml.cs">
+      <DependentUpon>ButtonContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\BlockPluginPage.xaml.cs">
+      <DependentUpon>BlockPluginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlAdaptiveThreshold.xaml.cs">
+      <DependentUpon>UserControlAdaptiveThreshold.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlBlur.xaml.cs">
+      <DependentUpon>UserControlBlur.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlCropLayer.xaml.cs">
+      <DependentUpon>UserControlCropLayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlCvtColor.xaml.cs">
+      <DependentUpon>UserControlCvtColor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlEnumBox.xaml.cs">
+      <DependentUpon>UserControlEnumBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlFastNlMeansDenoisingColored.xaml.cs">
+      <DependentUpon>UserControlFastNlMeansDenoisingColored.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlHoughLine.xaml.cs">
+      <DependentUpon>UserControlHoughLine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlInput.xaml.cs">
+      <DependentUpon>UserControlInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlInputTextAndBoolean.xaml.cs">
+      <DependentUpon>UserControlInputTextAndBoolean.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlInputTextAndEnum.xaml.cs">
+      <DependentUpon>UserControlInputTextAndEnum.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlMorphology.xaml.cs">
+      <DependentUpon>UserControlMorphology.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlNegate.xaml.cs">
+      <DependentUpon>UserControlNegate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlReplaceColor.xaml.cs">
+      <DependentUpon>UserControlReplaceColor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlResize.xaml.cs">
+      <DependentUpon>UserControlResize.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlResolution.xaml.cs">
+      <DependentUpon>UserControlResolution.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Filters\UserControlThreshold.xaml.cs">
+      <DependentUpon>UserControlThreshold.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\PluginControl.xaml.cs">
+      <DependentUpon>PluginControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\UserControlCheckbox.xaml.cs">
+      <DependentUpon>UserControlCheckbox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\UserControlContainer.xaml.cs">
+      <DependentUpon>UserControlContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\UserControlDropdown.xaml.cs">
+      <DependentUpon>UserControlDropdown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\UserControlConfig.xaml.cs">
+      <DependentUpon>UserControlConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\UserControlInfoText.xaml.cs">
+      <DependentUpon>UserControlInfoText.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\UserControlSupport.xaml.cs">
+      <DependentUpon>UserControlSupport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\UserControlWordlist.xaml.cs">
+      <DependentUpon>UserControlWordlist.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\UserControlFilePicker.xaml.cs">
+      <DependentUpon>UserControlFilePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\UserControlNumeric.xaml.cs">
+      <DependentUpon>UserControlNumeric.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\UserControlText.xaml.cs">
+      <DependentUpon>UserControlText.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\UserControlTextMulti.xaml.cs">
+      <DependentUpon>UserControlTextMulti.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WpfScreen.cs" />
+    <None Include="LSHighlighting.xshd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <Compile Include="Views\Dialogs\DialogSelectWordlist.xaml.cs">
+      <DependentUpon>DialogSelectWordlist.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HugeFileSort.cs" />
+    <Compile Include="Views\Dialogs\DialogAddBlock.xaml.cs">
+      <DependentUpon>DialogAddBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\DialogCustomInput.xaml.cs">
+      <DependentUpon>DialogCustomInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\DialogSelectConfig.xaml.cs">
+      <DependentUpon>DialogSelectConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Configs\ConfigOtherOptions.xaml.cs">
+      <DependentUpon>ConfigOtherOptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Configs\OtherOptions\Data.xaml.cs">
+      <DependentUpon>Data.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Configs\OtherOptions\General.xaml.cs">
+      <DependentUpon>General.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Configs\OtherOptions\Inputs.xaml.cs">
+      <DependentUpon>Inputs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Configs\OtherOptions\Proxies.xaml.cs">
+      <DependentUpon>Proxies.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\DialogNewConfig.xaml.cs">
+      <DependentUpon>DialogNewConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Help.xaml.cs">
+      <DependentUpon>Help.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\ConfigsSection.xaml.cs">
+      <DependentUpon>ConfigsSection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Configs\ConfigManager.xaml.cs">
+      <DependentUpon>ConfigManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\HitsDB.xaml.cs">
+      <DependentUpon>HitsDB.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\RunnerManager.xaml.cs">
+      <DependentUpon>RunnerManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Settings\OBSettings.xaml.cs">
+      <DependentUpon>OBSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Settings\OpenBullet\General.xaml.cs">
+      <DependentUpon>General.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Settings\OpenBullet\Sources.xaml.cs">
+      <DependentUpon>Sources.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Settings\OpenBullet\Themes.xaml.cs">
+      <DependentUpon>Themes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Settings\OpenBullet\Sounds.xaml.cs">
+      <DependentUpon>Sounds.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Settings\RLSettings.xaml.cs">
+      <DependentUpon>RLSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Settings\RuriLib\Selenium.xaml.cs">
+      <DependentUpon>Selenium.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Settings\RuriLib\Captchas.xaml.cs">
+      <DependentUpon>Captchas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Settings\RuriLib\Proxies.xaml.cs">
+      <DependentUpon>Proxies.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Settings\RuriLib\General.xaml.cs">
+      <DependentUpon>General.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\DialogAddWordlist.xaml.cs">
+      <DependentUpon>DialogAddWordlist.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\DialogAddProxies.xaml.cs">
+      <DependentUpon>DialogAddProxies.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalSettings.cs" />
+    <Compile Include="MainDialog.xaml.cs">
+      <DependentUpon>MainDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\ProxyManager.xaml.cs">
+      <DependentUpon>ProxyManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Tools\Database.xaml.cs">
+      <DependentUpon>Database.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageBlockBypassCF.xaml.cs">
+      <DependentUpon>PageBlockBypassCF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageBlockCaptcha.xaml.cs">
+      <DependentUpon>PageBlockCaptcha.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageBlockFunction.xaml.cs">
+      <DependentUpon>PageBlockFunction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageBlockKeycheck.xaml.cs">
+      <DependentUpon>PageBlockKeycheck.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageBlockLSCode.xaml.cs">
+      <DependentUpon>PageBlockLSCode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageBlockParse.xaml.cs">
+      <DependentUpon>PageBlockParse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageBlockRecaptcha.xaml.cs">
+      <DependentUpon>PageBlockRecaptcha.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageBlockRequest.xaml.cs">
+      <DependentUpon>PageBlockRequest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageBlockTCP.xaml.cs">
+      <DependentUpon>PageBlockTCP.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageBlockUtility.xaml.cs">
+      <DependentUpon>PageBlockUtility.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageSBlockBrowserAction.xaml.cs">
+      <DependentUpon>PageSBlockBrowserAction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageSBlockElementAction.xaml.cs">
+      <DependentUpon>PageSBlockElementAction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageSBlockExecuteJS.xaml.cs">
+      <DependentUpon>PageSBlockExecuteJS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StackerBlocks\PageSBlockNavigate.xaml.cs">
+      <DependentUpon>PageSBlockNavigate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\ToolsSection.xaml.cs">
+      <DependentUpon>ToolsSection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Tools\ListGenerator.xaml.cs">
+      <DependentUpon>ListGenerator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\Tools\SeleniumTools.xaml.cs">
+      <DependentUpon>SeleniumTools.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\ConfigRepository.cs" />
+    <Compile Include="Repositories\LiteDBRepository.cs" />
+    <Compile Include="ViewModels\OBSettingsViewModel.cs" />
+    <Compile Include="Snowflake.xaml.cs">
+      <DependentUpon>Snowflake.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SortAdorner.cs" />
+    <Compile Include="Views\Main\Configs\Stacker.xaml.cs">
+      <DependentUpon>Stacker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SplashWindow.xaml.cs">
+      <DependentUpon>SplashWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\BlockKeycheckViewModel.cs" />
+    <Compile Include="ViewModels\ConfigManagerViewModel.cs" />
+    <Compile Include="ViewModels\ConfigOtherOptionsInputViewModel.cs" />
+    <Compile Include="ViewModels\HitsDBViewModel.cs" />
+    <Compile Include="ViewModels\ListGeneratorViewModel.cs" />
+    <Compile Include="ViewModels\OBSettings\OBSettingsGeneral.cs" />
+    <Compile Include="ViewModels\OBSettings\OBSettingsSounds.cs" />
+    <Compile Include="ViewModels\OBSettings\OBSettingsSources.cs" />
+    <Compile Include="ViewModels\OBSettings\OBSettingsThemes.cs" />
+    <Compile Include="ViewModels\ProxyManagerViewModel.cs" />
+    <Compile Include="ViewModels\RunnerManagerViewModel.cs" />
+    <Compile Include="ViewModels\KeychainViewModel.cs" />
+    <Compile Include="ViewModels\KeyViewModel.cs" />
+    <Compile Include="ViewModels\StackerBlockViewModel.cs" />
+    <Compile Include="ViewModels\StackerViewModel.cs" />
+    <Compile Include="ViewModels\WordlistManagerViewModel.cs" />
+    <Compile Include="Views\Main\WordlistManager.xaml.cs">
+      <DependentUpon>WordlistManager.xaml</DependentUpon>
+    </Compile>
+    <None Include="Properties\app.manifest" />
+    <None Include="Resources\LSHighlighting.xshd" />
+    <Page Include="LogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NotesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\DialogLSDoc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\DialogSelectBots.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\DialogSetProxies.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\FindReplaceDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Configs\ConfigOcrSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Configs\OtherOptions\Requests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Configs\OtherOptions\Selenium.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\DialogShowLog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoadingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\DialogSelectWordlist.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\DialogAddBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\DialogCustomInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\DialogSelectConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Configs\ConfigOtherOptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Configs\OtherOptions\Data.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Configs\OtherOptions\General.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Configs\OtherOptions\Inputs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Configs\OtherOptions\Proxies.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\DialogNewConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Help.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\ConfigsSection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Configs\ConfigManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\HitsDB.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\PluginsSection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\ReleaseNotesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\RunnerManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Settings\OBSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Settings\OpenBullet\General.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Settings\OpenBullet\Sources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Settings\OpenBullet\Themes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Settings\OpenBullet\Sounds.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Settings\RLSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Settings\RuriLib\Ocr.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Settings\RuriLib\Selenium.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Settings\RuriLib\Captchas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Settings\RuriLib\Proxies.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Settings\RuriLib\General.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\DialogAddWordlist.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\DialogAddProxies.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Runner\Runner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\Main\Runner\Runner.xaml.cs">
+      <DependentUpon>Runner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\Main\ProxyManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Support.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Tools\Database.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Tools\TessDataDownloads.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Tools\WordlistTools.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageBlockOcr.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageBlockReportCaptcha.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageBlockBypassCF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageBlockCaptcha.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageBlockFunction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageBlockKeycheck.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageBlockLSCode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageBlockParse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageBlockRecaptcha.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageBlockRequest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageBlockSolveCaptcha.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageBlockSpeechToText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageBlockTCP.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageBlockUtility.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageSBlockBrowserAction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageSBlockElementAction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageSBlockExecuteJS.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\PageSBlockNavigate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Configs\Stacker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Snowflake.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SplashWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\MetroDark\MetroDark.MSControls.Core.Implicit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\MetroDark\MetroDark.MSControls.Toolkit.Implicit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\MetroDark\Styles.Shared.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\MetroDark\Styles.WPF.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\MetroDark\Theme.Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Main\WordlistManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\ToolsSection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Tools\ListGenerator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\Tools\SeleniumTools.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\ButtonContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StackerBlocks\BlockPluginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlAdaptiveThreshold.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlBlur.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlCropLayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlCvtColor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlEnumBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlFastNlMeansDenoisingColored.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlHoughLine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlInputTextAndBoolean.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlInputTextAndEnum.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlMorphology.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlNegate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlReplaceColor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlResize.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlResolution.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Filters\UserControlThreshold.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\PluginControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\UserControlCheckbox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\UserControlContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\UserControlDropdown.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\UserControlConfig.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UserControls\UserControlInfoText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\UserControlSupport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\UserControlWordlist.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UserControls\UserControlFilePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\UserControlNumeric.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\UserControlText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\UserControlTextMulti.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Resource Include="Fonts\CenturyGothicBold.ttf" />
+    <Resource Include="Fonts\CenturyGothicRegular.ttf" />
+    <Resource Include="Fonts\fontawesome-webfont.ttf" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\MetroDark\HowToApplyTheme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="OBlogoIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\plus.png" />
+    <Resource Include="Images\Icons\minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\down.png" />
+    <Resource Include="Images\Icons\up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\disable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\clone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\left.png" />
+    <Resource Include="Images\Icons\right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BBIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BBLogowhiteBullets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\maximize.png" />
+    <Resource Include="Images\Icons\minimize.png" />
+    <Resource Include="Images\Icons\quit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\star.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\grip.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\camera.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LSHighlighting.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LSDoc.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Themes\empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\log.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PluginFramework\PluginFramework.csproj">
+      <Project>{E1DD89D0-EC1D-4849-A2B6-ADB261DFA3CE}</Project>
+      <Name>PluginFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RuriLib\RuriLib.csproj">
+      <Project>{17e95d0b-c1fd-445c-9fdf-244af7299a67}</Project>
+      <Name>RuriLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SilverBullet.ImageProcessor\SilverBullet.ImageProcessor.csproj">
+      <Project>{0a8b141b-e5f3-4f7f-ba88-183668361b42}</Project>
+      <Name>SilverBullet.ImageProcessor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tesseract\Tesseract\Tesseract.csproj">
+      <Project>{ab8f7cf1-e75b-4bd3-8853-2348ecdea969}</Project>
+      <Name>Tesseract</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DefaultEnvFile.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SyntaxHelper.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Resource Include="Images\Icons\play.png" />
+    <Resource Include="Images\Icons\stop.png" />
+    <Resource Include="Images\Icons\delete.png" />
+    <Resource Include="Images\Icons\import.png" />
+    <Resource Include="Images\Icons\gears.png" />
+    <Resource Include="Images\Icons\code.png" />
+    <Resource Include="Images\OBIcon.png" />
+    <Resource Include="Images\Icons\book.png" />
+    <Resource Include="Images\Icons\remove Filter.png" />
+    <Resource Include="Icon\svbfile.ico" />
+    <Resource Include="Images\Icons\discord.png" />
+    <Resource Include="Images\Icons\add-128.png" />
+    <Resource Include="Images\Icons\add-512.png" />
+    <Resource Include="Images\Icons\add-32.png" />
+    <Content Include="Images\Icons\export.png" />
+    <Resource Include="Images\Icons\load.png" />
+    <Resource Include="Images\Icons\new.png" />
+    <Resource Include="Images\Icons\scan.png" />
+    <Resource Include="Images\Icons\search.png" />
+    <Resource Include="Images\Icons\tasks.png" />
+    <Resource Include="Images\Icons\undo.png" />
+    <Resource Include="Images\Icons\stack.png" />
+    <Resource Include="Images\Icons\git.png" />
+    <Resource Include="Images\Icons\retry.png" />
+    <Resource Include="Images\SBIcon.png" />
+    <Resource Include="Images\Icons\filter.png" />
+    <Resource Include="Images\Icons\filedocmultiple.png" />
+    <Resource Include="Images\Icons\sbIcon.png" />
+    <Resource Include="Images\SilverBullet Icon.ico" />
+    <Content Include="Sounds\rifle_hit.wav" />
+    <Content Include="Sounds\rifle_reload.wav" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Questo progetto fa riferimento a uno o più pacchetti NuGet che non sono presenti in questo computer. Usare lo strumento di ripristino dei pacchetti NuGet per scaricarli. Per altre informazioni, vedere http://go.microsoft.com/fwlink/?LinkID=322105. Il file mancante è {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Selenium.WebDriver.GeckoDriver.Win64.0.26.0\build\Selenium.WebDriver.GeckoDriver.Win64.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.GeckoDriver.Win64.0.26.0\build\Selenium.WebDriver.GeckoDriver.Win64.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.Firefox.WebDriver.0.26.0\build\Selenium.Firefox.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Firefox.WebDriver.0.26.0\build\Selenium.Firefox.WebDriver.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.WebDriver.ChromeDriver.83.0.4103.3900\build\Selenium.WebDriver.ChromeDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.ChromeDriver.83.0.4103.3900\build\Selenium.WebDriver.ChromeDriver.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.83.0.0\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.83.0.0\build\Selenium.Chrome.WebDriver.targets'))" />
+    <Error Condition="!Exists('..\packages\cef.redist.x64.83.4.2\build\cef.redist.x64.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x64.83.4.2\build\cef.redist.x64.props'))" />
+    <Error Condition="!Exists('..\packages\cef.redist.x86.83.4.2\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x86.83.4.2\build\cef.redist.x86.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.targets'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.targets'))" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>if not exist "$(TargetDir)bin" mkdir "$(TargetDir)bin"
+if $(ConfigurationName) == Release move "$(TargetDir)*.dll" "$(TargetDir)bin\"
+if $(ConfigurationName) == Release move "$(TargetDir)*driver.exe" "$(TargetDir)bin\"
+if exist "$(TargetDir)cs-CZ" RD /S /Q "$(TargetDir)cs-CZ"
+if exist "$(TargetDir)de" RD /S /Q "$(TargetDir)de"
+if exist "$(TargetDir)es" RD /S /Q "$(TargetDir)es"
+if exist "$(TargetDir)fr" RD /S /Q "$(TargetDir)fr"
+
+XCOPY "$(TargetDir)ar" "$(TargetDir)bin\ar" /i /e /s /y /f
+XCOPY "$(TargetDir)az" "$(TargetDir)bin\az" /i /e /s /y /f
+XCOPY "$(TargetDir)dg" "$(TargetDir)bin\dg" /i /e /s /y /f
+XCOPY "$(TargetDir)bn-DB" "$(TargetDir)bin\bn-DB" /i /e /s /y /f
+XCOPY "$(TargetDir)cs" "$(TargetDir)bin\cs" /i /e /s /y /f
+XCOPY "$(TargetDir)da" "$(TargetDir)bin\da" /i /e /s /y /f
+XCOPY "$(TargetDir)el" "$(TargetDir)bin\el" /i /e /s /y /f
+XCOPY "$(TargetDir)el" "$(TargetDir)bin\el" /i /e /s /y /f
+XCOPY "$(TargetDir)fa" "$(TargetDir)bin\fa" /i /e /s /y /f
+XCOPY "$(TargetDir)fi-FI" "$(TargetDir)bin\fi-FI" /i /e /s /y /f
+XCOPY "$(TargetDir)fr-BE" "$(TargetDir)bin\fr-BE" /i /e /s /y /f
+XCOPY "$(TargetDir)he" "$(TargetDir)bin\he" /i /e /s /y /f
+XCOPY "$(TargetDir)hr" "$(TargetDir)bin\hr" /i /e /s /y /f
+XCOPY "$(TargetDir)id" "$(TargetDir)bin\ja" /i /e /s /y /f
+XCOPY "$(TargetDir)lv" "$(TargetDir)bin\lv" /i /e /s /y /f
+XCOPY "$(TargetDir)ms-MY" "$(TargetDir)bin\ms-MY" /i /e /s /y /f
+XCOPY "$(TargetDir)mt" "$(TargetDir)bin\mt" /i /e /s /y /f
+XCOPY "$(TargetDir)nb" "$(TargetDir)bin\nb" /i /e /s /y /f
+XCOPY "$(TargetDir)nb-NO" "$(TargetDir)bin\nb-NO" /i /e /s /y /f
+XCOPY "$(TargetDir)nl" "$(TargetDir)bin\nl" /i /e /s /y /f
+XCOPY "$(TargetDir)pl" "$(TargetDir)bin\pl" /i /e /s /y /f
+XCOPY "$(TargetDir)pt" "$(TargetDir)bin\pt" /i /e /s /y /f
+XCOPY "$(TargetDir)sk" "$(TargetDir)bin\sk" /i /e /s /y /f
+XCOPY "$(TargetDir)sl" "$(TargetDir)bin\sl" /i /e /s /y /f
+XCOPY "$(TargetDir)sr" "$(TargetDir)bin\sr" /i /e /s /y /f
+XCOPY "$(TargetDir)sr-Latn" "$(TargetDir)bin\st-Latn" /i /e /s /y /f
+XCOPY "$(TargetDir)tr" "$(TargetDir)bin\tr" /i /e /s /y /f
+XCOPY "$(TargetDir)uk" "$(TargetDir)bin\uk" /i /e /s /y /f
+XCOPY "$(TargetDir)uz-Cyrl-UZ" "$(TargetDir)bin\uz-Cyrl-UZ" /i /e /s /y /f
+XCOPY "$(TargetDir)uz-Latn-UZ" "$(TargetDir)bin\uz-Latn-UZ" /i /e /s /y /f
+XCOPY "$(TargetDir)vi" "$(TargetDir)bin\vi" /i /e /s /y /f
+XCOPY "$(TargetDir)zh-CN" "$(TargetDir)bin\zh-CN" /i /e /s /y /f
+XCOPY "$(TargetDir)zh-Hant" "$(TargetDir)bin\zh-Hant" /i /e /s /y /f
+
+if exist "$(TargetDir)af" RD /S /Q "$(TargetDir)af"
+if exist "$(TargetDir)ar" RD /S /Q "$(TargetDir)ar"
+if exist "$(TargetDir)az" RD /S /Q "$(TargetDir)az"
+if exist "$(TargetDir)bg" RD /S /Q "$(TargetDir)bg"
+if exist "$(TargetDir)bin-DB" RD /S /Q "$(TargetDir)bin-DB"
+if exist "$(TargetDir)cs" RD /S /Q "$(TargetDir)cs"
+if exist "$(TargetDir)da" RD /S /Q "$(TargetDir)da"
+if exist "$(TargetDir)el" RD /S /Q "$(TargetDir)el"
+if exist "$(TargetDir)fa" RD /S /Q "$(TargetDir)fa"
+if exist "$(TargetDir)fi-FI" RD /S /Q "$(TargetDir)fi-FI"
+if exist "$(TargetDir)fr-BE" RD /S /Q "$(TargetDir)fr-BE"
+if exist "$(TargetDir)he" RD /S /Q "$(TargetDir)he"
+if exist "$(TargetDir)hr" RD /S /Q "$(TargetDir)hr"
+if exist "$(TargetDir)id" RD /S /Q "$(TargetDir)id"
+if exist "$(TargetDir)ja" RD /S /Q "$(TargetDir)ja"
+if exist "$(TargetDir)lv" RD /S /Q "$(TargetDir)lv"
+if exist "$(TargetDir)ms-MY" RD /S /Q "$(TargetDir)ms-MY"
+if exist "$(TargetDir)mt" RD /S /Q "$(TargetDir)mt"
+if exist "$(TargetDir)nb" RD /S /Q "$(TargetDir)nb"
+if exist "$(TargetDir)nb-NO" RD /S /Q "$(TargetDir)nb-NO"
+if exist "$(TargetDir)nl" RD /S /Q "$(TargetDir)nl"
+if exist "$(TargetDir)pl" RD /S /Q "$(TargetDir)pl"
+if exist "$(TargetDir)pt" RD /S /Q "$(TargetDir)pt"
+if exist "$(TargetDir)sk" RD /S /Q "$(TargetDir)sk"
+if exist "$(TargetDir)sl" RD /S /Q "$(TargetDir)sl"
+if exist "$(TargetDir)sr" RD /S /Q "$(TargetDir)sr"
+if exist "$(TargetDir)sr-Latn" RD /S /Q "$(TargetDir)sr-Latn"
+if exist "$(TargetDir)tr" RD /S /Q "$(TargetDir)tr"
+if exist "$(TargetDir)uk" RD /S /Q "$(TargetDir)uk"
+if exist "$(TargetDir)uz-Cyrl-UZ" RD /S /Q "$(TargetDir)uz-Cyrl-UZ"
+if exist "$(TargetDir)uz-Latn-UZ" RD /S /Q "$(TargetDir)uz-Latn-UZ"
+if exist "$(TargetDir)vi" RD /S /Q "$(TargetDir)vi"
+
+if exist "$(TargetDir)hu" RD /S /Q "$(TargetDir)hu"
+if exist "$(TargetDir)it" RD /S /Q "$(TargetDir)it"
+if exist "$(TargetDir)pt-BR" RD /S /Q "$(TargetDir)pt-BR"
+if exist "$(TargetDir)ro" RD /S /Q "$(TargetDir)ro"
+if exist "$(TargetDir)ru" RD /S /Q "$(TargetDir)ru"
+if exist "$(TargetDir)sv" RD /S /Q "$(TargetDir)sv"
+if exist "$(TargetDir)zh-Hans" RD /S /Q "$(TargetDir)zh-Hans"
+if not exist "$(TargetDir)Settings" mkdir "$(TargetDir)Settings"
+if not exist "$(TargetDir)Settings\Environment.ini" copy "$(ProjectDir)DefaultEnvFile.ini" "$(TargetDir)Settings\Environment.ini"
+if not exist "$(TargetDir)Sounds" mkdir "$(TargetDir)Sounds"
+copy "$(ProjectDir)Sounds\rifle_hit.wav" "$(TargetDir)Sounds\rifle_hit.wav"
+copy "$(ProjectDir)Sounds\rifle_reload.wav" "$(TargetDir)Sounds\rifle_reload.wav"</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\Selenium.WebDriver.GeckoDriver.Win64.0.26.0\build\Selenium.WebDriver.GeckoDriver.Win64.targets" Condition="Exists('..\packages\Selenium.WebDriver.GeckoDriver.Win64.0.26.0\build\Selenium.WebDriver.GeckoDriver.Win64.targets')" />
+  <Import Project="..\packages\Selenium.Firefox.WebDriver.0.26.0\build\Selenium.Firefox.WebDriver.targets" Condition="Exists('..\packages\Selenium.Firefox.WebDriver.0.26.0\build\Selenium.Firefox.WebDriver.targets')" />
+  <Import Project="..\packages\Selenium.WebDriver.ChromeDriver.83.0.4103.3900\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.ChromeDriver.83.0.4103.3900\build\Selenium.WebDriver.ChromeDriver.targets')" />
+  <Import Project="..\packages\Selenium.Chrome.WebDriver.83.0.0\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.83.0.0\build\Selenium.Chrome.WebDriver.targets')" />
+  <Import Project="..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.83.4.20\build\CefSharp.Common.targets')" />
+  <Import Project="..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.targets" Condition="Exists('..\packages\CefSharp.Wpf.83.4.20\build\CefSharp.Wpf.targets')" />
+</Project>

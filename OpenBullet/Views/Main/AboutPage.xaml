@@ -1,0 +1,89 @@
+﻿<Page x:Class="OpenBullet.Views.Main.AboutPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AboutPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock
+                FontSize="14"
+                Foreground="{DynamicResource ForegroundMain}"
+                TextWrapping="Wrap">
+                <Italic>OpenBullet</Italic>
+                is a webtesting suite that can be used for <Bold>scraping</Bold>
+                and <Bold>parsing</Bold>
+                data, automated <Bold>pentesting</Bold>
+                , selenium <Bold>unit testing</Bold>
+                and much more..<LineBreak /><LineBreak />
+                <Span Foreground="{DynamicResource ForegroundBad}"><Bold>IT IS ILLEGAL</Bold>
+                    to use this program to perform (D)DoS or credential stuffing attacks on sites you don't own!</Span>
+                <LineBreak/>
+                   <LineBreak/><Span Foreground="{DynamicResource ForegroundGood}"><Bold FontSize="14.5">FIXED And Updated by MOHAMMAD</Bold></Span><LineBreak /><LineBreak/>
+                Special thanks to these:<LineBreak /><LineBreak />
+                • <Span Foreground="{DynamicResource ForegroundCustom}">AlirezaCR</Span><LineBreak/>
+                • Mohammad20000<LineBreak />
+                • CY3ER<LineBreak />
+                • Mohammad Salatin<LineBreak />
+                • Sina13m<LineBreak />
+                • HOSEENJ<LineBreak />
+                • UkUnknown<LineBreak />
+                • Ruri(Made Openbullet)<LineBreak />
+                <LineBreak />
+                <LineBreak />
+                <Span Foreground="LightBlue">
+                    This <Bold Foreground="LightSteelBlue">
+                        OpenBullet
+                    </Bold>
+                    is a mod version with more features and customization. It is free</Span><LineBreak /><LineBreak />
+            </TextBlock>
+
+        </StackPanel>
+
+        <StackPanel
+            Grid.Row="3"
+            Orientation="Horizontal">
+            <Button IsEnabled="False"
+                x:Name="docuButton"
+                Margin="0,5">
+                <StackPanel Orientation="Horizontal">
+                    <Image RenderOptions.BitmapScalingMode="HighQuality"
+                        Width="20"
+                        Source="/Images/Icons/book.png" />
+                    <TextBlock
+                        Margin="5,0"
+                        VerticalAlignment="Center">
+                        Usage Guide
+                    </TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <StackPanel
+            Grid.Row="3"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Label
+                Content="If you enjoy please consider Donating some BTC:"
+                FontSize="11.5"
+                FontWeight="Bold"
+                Foreground="#FF9EDAFF" />
+            <TextBox
+                Height="30"
+                MinWidth="250"
+                FontWeight="Bold"
+                FontSize="12.5"
+                IsReadOnly="True"
+                Text="1PbFK28PGsXy1VQG4PBdofLqDdRW4LJ8TS" />
+        </StackPanel>
+
+    </Grid>
+</Page>

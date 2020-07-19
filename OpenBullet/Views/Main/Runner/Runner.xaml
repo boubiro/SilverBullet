@@ -1,0 +1,911 @@
+﻿<Page
+    x:Class="OpenBullet.Views.Main.Runner.Runner"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:OpenBullet.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:OpenBullet.Views.Main.Runner"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:myvms="[myvms ]clr-namespace:OpenBullet.ViewModels"
+    xmlns:runner="clr-namespace:RuriLib.Runner;assembly=RuriLib"
+    Title="Runner"
+    d:DesignHeight="550"
+    d:DesignWidth="780"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <ContextMenu x:Key="ItemContextMenu">
+            <MenuItem
+                x:Name="copySelectedData"
+                Click="copySelectedData_Click"
+                Header="Copy Selected Data">
+                <MenuItem.Icon>
+                    <iconPacks:PackIconMaterialDesign Kind="ContentCopy" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem
+                x:Name="copySelectedProxy"
+                Click="copySelectedProxy_Click"
+                Header="Copy Selected Proxy">
+                <MenuItem.Icon>
+                    <iconPacks:PackIconUnicons Kind="ServerConnection" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem
+                x:Name="copySelectedCapture"
+                Click="copySelectedCapture_Click"
+                Header="Copy Selected Data with Capture">
+                <MenuItem.Icon>
+                    <iconPacks:PackIconMaterial Kind="CardAccountDetails" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem
+                x:Name="sendToDebugger"
+                Click="sendToDebugger_Click"
+                Header="Send To Debugger">
+                <MenuItem.Icon>
+                    <iconPacks:PackIconFontAwesome Kind="ShareSolid" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem
+                x:Name="selectAll"
+                Click="selectAll_Click"
+                Header="Select All">
+                <MenuItem.Icon>
+                    <iconPacks:PackIconModern Kind="ListSelect" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem
+                x:Name="showHTML"
+                Click="showHTML_Click"
+                Header="Show Last Response in Browser">
+                <MenuItem.Icon>
+                    <iconPacks:PackIconIonicons Kind="BrowsersMD" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem
+                x:Name="showLog"
+                Click="showLog_Click"
+                Header="Show Full Log">
+                <MenuItem.Icon>
+                    <iconPacks:PackIconFontAwesome Kind="HistorySolid" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.Resources>
+            <conv:EnumBooleanConverter x:Key="ComparisonConverter" />
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  TOP GRID  -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="300" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Top Left Grid  -->
+            <Grid
+                Grid.Row="0"
+                Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Label Content="Start:" />
+                    <TextBox
+                        x:Name="labelStartingPoint"
+                        MinWidth="33"
+                        IsEnabled="{Binding ControlsEnabled}"
+                        Text="{Binding StartingPoint}"
+                        TextAlignment="Center" />
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="Margin" Value="0,0,-8,0" />
+                            <Setter Property="Foreground" Value="{DynamicResource ForegroundMain}" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <Label>
+                        <DockPanel>
+                            <Path
+                                Width="18.5"
+                                Height="18.25"
+                                Data="M 38 16 C 36.6968 16 35.420688 16.112778 34.179688 16.330078 C 31.604188 16.781078 29.182047 17.679659 26.998047 18.943359 C 24.771347 20.231659 22.791484 21.899222 21.146484 23.857422 C 19.511484 25.804022 18.206712 28.038056 17.320312 30.472656 C 16.465512 32.820756 16 35.3563 16 38 C 16 40.6437 16.465512 43.179244 17.320312 45.527344 C 18.206712 47.962044 19.511384 50.195978 21.146484 52.142578 C 22.791384 54.100878 24.771347 55.768241 26.998047 57.056641 C 29.182047 58.320241 31.604188 59.218922 34.179688 59.669922 C 35.420687 59.887222 36.6968 60 38 60 C 39.3032 60 40.579312 59.887222 41.820312 59.669922 C 44.395812 59.218922 46.817953 58.320341 49.001953 57.056641 C 51.228653 55.768341 53.208616 54.098925 54.853516 52.140625 C 56.488616 50.194125 57.793288 47.961944 58.679688 45.527344 C 59.534488 43.179244 60 40.6437 60 38 L 60.009766 38 C 60.009866 35.5012 59.581934 32.958809 58.677734 30.474609 L 58.679688 30.472656 C 57.793387 28.038056 56.488516 25.805975 54.853516 23.859375 C 53.208616 21.901075 51.228653 20.231759 49.001953 18.943359 C 46.817953 17.679659 44.395813 16.781178 41.820312 16.330078 C 40.579313 16.112778 39.3032 16 38 16 z M 38 24.181641 C 38.8185 24.181641 39.620891 24.252172 40.400391 24.388672 C 42.017991 24.671972 43.538356 25.23755 44.910156 26.03125 C 46.308756 26.84045 47.552838 27.887188 48.585938 29.117188 C 49.612938 30.339787 50.431581 31.744238 50.988281 33.273438 C 51.556181 34.833737 51.826272 36.4305 51.826172 38 L 51.818359 38 C 51.818359 39.6605 51.525181 41.251762 50.988281 42.726562 C 50.431581 44.255762 49.612937 45.660112 48.585938 46.882812 C 47.552838 48.112813 46.308756 49.15955 44.910156 49.96875 C 43.538356 50.76245 42.017991 51.328028 40.400391 51.611328 C 39.620891 51.747828 38.8185 51.818359 38 51.818359 C 37.1814 51.818359 36.380963 51.747828 35.601562 51.611328 C 33.983863 51.328028 32.461644 50.76245 31.089844 49.96875 C 29.691244 49.15955 28.449116 48.112813 27.416016 46.882812 C 26.389016 45.660113 25.568419 44.255762 25.011719 42.726562 C 24.474819 41.251762 24.181641 39.6605 24.181641 38 C 24.181641 36.3395 24.474819 34.748238 25.011719 33.273438 C 25.568419 31.744238 26.389016 30.339787 27.416016 29.117188 C 28.449116 27.887187 29.691244 26.84045 31.089844 26.03125 C 32.461644 25.23755 33.983863 24.671972 35.601562 24.388672 C 36.380963 24.252172 37.1814 24.181641 38 24.181641 z "
+                                Fill="White"
+                                Stretch="Fill" />
+                            <TextBlock Margin="4,0,0,0">Prog:</TextBlock>
+                        </DockPanel>
+                    </Label>
+                    <Label Content="{Binding ProgressCount}" />
+                    <Label Content=" / " />
+                    <Label Content="{Binding WordlistSize}" />
+                    <Label Content=" (" />
+                    <Label Content="{Binding Progress}" />
+                    <Label Content="%)" />
+                </StackPanel>
+
+                <Slider
+                    x:Name="startingPointSlider"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    IsEnabled="{Binding ControlsEnabled}"
+                    Maximum="{Binding WordlistSize}"
+                    Minimum="1"
+                    Value="{Binding StartingPoint}" />
+                <ProgressBar
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="5"
+                    Value="{Binding Progress, Mode=OneWay}" />
+
+            </Grid>
+
+            <!--  Top Right Grid  -->
+            <Grid
+                Grid.Row="0"
+                Grid.Column="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <DockPanel
+                    Grid.Row="0"
+                    Grid.Column="0">
+                    <Label
+                        VerticalAlignment="Center"
+                        Content="Bots:"
+                        DockPanel.Dock="Left" />
+                    <Label
+                        Width="35"
+                        VerticalAlignment="Center"
+                        Content="{Binding BotsAmount}"
+                        DockPanel.Dock="Left" />
+                    <Slider
+                        x:Name="botsSlider"
+                        Margin="0,0,10,0"
+                        VerticalAlignment="Center"
+                        Maximum="400"
+                        Minimum="1"
+                        TickFrequency="20"
+                        TickPlacement="Both"
+                        Value="{Binding BotsAmount, Mode=TwoWay}" />
+                </DockPanel>
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Orientation="Horizontal">
+                    <Label
+                        Margin="0,0,15,0"
+                        VerticalAlignment="Center"
+                        Content="Prox:" />
+                    <RadioButton
+                        x:Name="proxyDefRadio"
+                        Margin="0,0,5,0"
+                        VerticalAlignment="Center"
+                        Content="DEF"
+                        GroupName="proxyRadio"
+                        IsChecked="{Binding Path=ProxyMode, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static runner:ProxyMode.Default}}"
+                        IsEnabled="{Binding ControlsEnabled}"
+                        ToolTip="Use the default proxy settings for the loaded config" />
+                    <RadioButton
+                        x:Name="proxyYesRadio"
+                        Margin="0,0,5,0"
+                        VerticalAlignment="Center"
+                        Content="ON"
+                        GroupName="proxyRadio"
+                        IsChecked="{Binding Path=ProxyMode, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static runner:ProxyMode.On}}"
+                        IsEnabled="{Binding ControlsEnabled}"
+                        ToolTip="Override the config default setting and force the use of proxies" />
+                    <RadioButton
+                        x:Name="proxyNoRadio"
+                        Margin="0,0,5,0"
+                        VerticalAlignment="Center"
+                        Content="OFF"
+                        GroupName="proxyRadio"
+                        IsChecked="{Binding Path=ProxyMode, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static runner:ProxyMode.Off}}"
+                        IsEnabled="{Binding ControlsEnabled}"
+                        ToolTip="Override the config default setting and remove proxy requirements" />
+                </StackPanel>
+                <Button
+                    x:Name="startButton"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="1"
+                    Click="startButton_Click">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <iconPacks:PackIconMaterial
+                            Name="startButtonIcon"
+                            Width="18"
+                            Height="18"
+                            Margin="-6,0,5,0"
+                            VerticalAlignment="Center"
+                            Kind="PlayCircleOutline" />
+                        <TextBlock
+                            Name="startButtonLabel"
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            TextWrapping="Wrap">
+                            START
+                        </TextBlock>
+                    </Grid>
+                </Button>
+            </Grid>
+
+        </Grid>
+
+        <!--  OTHER GRID  -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="300" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="167" />
+            </Grid.RowDefinitions>
+
+            <!--  Splitter  -->
+            <GridSplitter
+                Grid.Row="0"
+                Grid.Column="1"
+                Width="5"
+                VerticalAlignment="Stretch"
+                ResizeBehavior="PreviousAndNext"
+                ResizeDirection="Columns" />
+
+            <!--  Right Grid  -->
+            <Grid
+                x:Name="rightGrid"
+                Grid.Row="0"
+                Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+
+                <ListView
+                    x:Name="validListView"
+                    Grid.Row="0"
+                    Background="Transparent"
+                    BorderThickness="1"
+                    Foreground="{DynamicResource ForegroundMain}"
+                    ItemsSource="{Binding Path=HitsList, Mode=OneWay}"
+                    SelectionMode="Extended">
+                    <!--  Align Headers to the Left  -->
+                    <ListView.Resources>
+                        <Style
+                            x:Key="GridViewColumnHeaderGripper"
+                            TargetType="Thumb">
+                            <Setter Property="Width" Value="18" />
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Offset="0.0" Color="{DynamicResource BorderLightColor}" />
+                                                <GradientStop Offset="1.0" Color="{DynamicResource BorderDarkColor}" />
+                                            </GradientStopCollection>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Thumb}">
+                                        <Border
+                                            Padding="{TemplateBinding Padding}"
+                                            Background="Transparent">
+                                            <Rectangle
+                                                Width="1"
+                                                HorizontalAlignment="Center"
+                                                Fill="{TemplateBinding Background}" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="BorderBrush">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Offset="0" Color="Black" />
+                                        <GradientStop Offset="1" Color="White" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                                        <Grid>
+                                            <Border
+                                                Background="Transparent"
+                                                BorderBrush="Black"
+                                                BorderThickness="0,0,0,1">
+                                                <TextBlock
+                                                    x:Name="ContentHeader"
+                                                    Width="{TemplateBinding Width}"
+                                                    Padding="5,5,5,0"
+                                                    Text="{TemplateBinding Content}"
+                                                    TextAlignment="Left" />
+                                            </Border>
+                                            <Thumb
+                                                x:Name="PART_HeaderGripper"
+                                                Margin="0,0,-9,0"
+                                                HorizontalAlignment="Right"
+                                                Style="{StaticResource GridViewColumnHeaderGripper}" />
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                            <Setter Property="Foreground" Value="{DynamicResource ForegroundMain}" />
+                            <Setter Property="FontFamily" Value="pack://application:,,,/Fonts/#Century Gothic" />
+                            <Setter Property="FontSize" Value="14" />
+                        </Style>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <EventSetter
+                                Event="MouseRightButtonDown"
+                                Handler="ListViewItem_MouseRightButtonDown" />
+                            <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                        <Border
+                                            x:Name="Bd"
+                                            Padding="0"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            SnapsToDevicePixels="true">
+                                            <GridViewRowPresenter
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource BackgroundSecondary}" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource BackgroundSecondary}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.Resources>
+
+                    <!--  Show Headers by overriding the default style  -->
+                    <ListView.Style>
+                        <Style TargetType="{x:Type ListView}" />
+                    </ListView.Style>
+
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn
+                                DisplayMemberBinding="{Binding Path=Time}"
+                                Header="Time" />
+                            <GridViewColumn
+                                DisplayMemberBinding="{Binding Path=Data}"
+                                Header="Data" />
+                            <GridViewColumn
+                                DisplayMemberBinding="{Binding Path=Proxy}"
+                                Header="Proxy" />
+                            <GridViewColumn
+                                DisplayMemberBinding="{Binding Path=Type}"
+                                Header="Type" />
+                            <GridViewColumn
+                                Width="2000"
+                                DisplayMemberBinding="{Binding Path=CapturedData}"
+                                Header="Capture" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="0"
+                        Orientation="Horizontal">
+                        <Button
+                            x:Name="hitsFilterButton"
+                            Click="hitsFilterButton_Click"
+                            Content="Hits" />
+                        <Button
+                            x:Name="customFilterButton"
+                            Click="customFilterButton_Click"
+                            Content="Custom" />
+                        <Button
+                            x:Name="toCheckFilterButton"
+                            Click="toCheckFilterButton_Click"
+                            Content="ToCheck" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0,-4,0,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="Margin" Value="-2,0" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="Foreground" Value="{DynamicResource ForegroundMain}" />
+                                <Setter Property="FontSize" Value="12" />
+                            </Style>
+                        </StackPanel.Resources>
+
+                        <Label
+                            x:Name="daysLabel"
+                            Content="{Binding TimerDays}" />
+                        <Label
+                            Height="26"
+                            Margin="0,0,0,-2"
+                            Content="days" />
+                        <Label
+                            x:Name="hoursLabel"
+                            Content="{Binding TimerHours}" />
+                        <Label Content=":" />
+                        <Label
+                            x:Name="minutesLabel"
+                            Content="{Binding TimerMinutes}" />
+                        <Label Content=":" />
+                        <Label
+                            x:Name="secondsLabel"
+                            Content="{Binding TimerSeconds}" />
+                    </StackPanel>
+
+                    <Label
+                        x:Name="timeLeft"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="0,-5,0,0"
+                        HorizontalAlignment="Left"
+                        Content="{Binding TimeLeft}" />
+                </Grid>
+
+            </Grid>
+
+            <!--  Bots List View  -->
+            <ListView
+                x:Name="botsListView"
+                Grid.Row="0"
+                Grid.Column="0"
+                Background="Transparent"
+                BorderThickness="1"
+                Foreground="{DynamicResource ForegroundMain}"
+                ItemsSource="{Binding Path=Bots}"
+                SelectionMode="Extended">
+                <!--  Align Headers to the Left  -->
+                <ListView.Resources>
+                    <Style
+                        x:Key="GridViewColumnHeaderGripper"
+                        TargetType="Thumb">
+                        <Setter Property="Width" Value="18" />
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStopCollection>
+                                            <GradientStop Offset="0.0" Color="{DynamicResource BorderLightColor}" />
+                                            <GradientStop Offset="1.0" Color="{DynamicResource BorderDarkColor}" />
+                                        </GradientStopCollection>
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Thumb}">
+                                    <Border
+                                        Padding="{TemplateBinding Padding}"
+                                        Background="Transparent">
+                                        <Rectangle
+                                            Width="1"
+                                            HorizontalAlignment="Center"
+                                            Fill="{TemplateBinding Background}" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="BorderBrush">
+                            <Setter.Value>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Offset="0" Color="Black" />
+                                    <GradientStop Offset="1" Color="White" />
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                        <Setter Property="HorizontalContentAlignment" Value="Left" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                                    <Grid>
+                                        <Border
+                                            Background="Transparent"
+                                            BorderBrush="Black"
+                                            BorderThickness="0,0,0,1">
+                                            <TextBlock
+                                                x:Name="ContentHeader"
+                                                Width="{TemplateBinding Width}"
+                                                Padding="5,5,5,0"
+                                                Text="{TemplateBinding Content}"
+                                                TextAlignment="Left" />
+                                        </Border>
+                                        <Thumb
+                                            x:Name="PART_HeaderGripper"
+                                            Margin="0,0,-9,0"
+                                            HorizontalAlignment="Right"
+                                            Style="{StaticResource GridViewColumnHeaderGripper}" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="OverridesDefaultStyle" Value="True" />
+                        <Setter Property="Foreground" Value="{DynamicResource ForegroundMain}" />
+                        <Setter Property="FontFamily" Value="pack://application:,,,/Fonts/#Century Gothic" />
+                        <Setter Property="FontSize" Value="14" />
+                    </Style>
+
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <Border
+                                        x:Name="Bd"
+                                        Padding="0"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        SnapsToDevicePixels="true">
+                                        <GridViewRowPresenter
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource BackgroundSecondary}" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource BackgroundSecondary}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Resources>
+
+                <!--  Show Headers by overriding the default style  -->
+                <ListView.Style>
+                    <Style TargetType="{x:Type ListView}" />
+                </ListView.Style>
+
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn
+                            Width="40"
+                            DisplayMemberBinding="{Binding Path=Id}"
+                            Header="Id" />
+                        <GridViewColumn
+                            Width="200"
+                            DisplayMemberBinding="{Binding Path=Data}"
+                            Header="Data" />
+                        <GridViewColumn
+                            Width="150"
+                            DisplayMemberBinding="{Binding Path=Proxy}"
+                            Header="Proxy" />
+                        <GridViewColumn
+                            Width="1000"
+                            DisplayMemberBinding="{Binding Path=Status}"
+                            Header="Status" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <!--  Bot Log Textbox  -->
+            <Grid
+                x:Name="bottomLeftGrid"
+                Grid.Row="2"
+                Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.8*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Orientation="Horizontal">
+                    <Button
+                        x:Name="selectConfigButton"
+                        Click="selectConfigButton_Click"
+                        Content="Select CFG"
+                        IsEnabled="{Binding ControlsEnabled}" />
+                    <Label Content="{Binding ConfigName}" />
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Orientation="Horizontal">
+                    <!--<Button
+                        x:Name="selectpProxylistButton"
+                        Click="selectpProxylistButton_Click"
+                        Content="Select Proxy"
+                        IsEnabled="{Binding ControlsEnabled}" />
+                    <Label Content="{Binding ProxylistName}" />-->
+                    <Button
+                        x:Name="selectWordlistButton"
+                        Click="selectWordlistButton_Click"
+                        Content="Select List"
+                        IsEnabled="{Binding ControlsEnabled}" />
+                    <Label Content="{Binding WordlistName}" />
+                </StackPanel>
+                <RichTextBox
+                    x:Name="logBox"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Padding="5"
+                    Background="{DynamicResource BackgroundSecondary}"
+                    BorderThickness="0"
+                    FontFamily="Consolas"
+                    IsReadOnly="True"
+                    VerticalScrollBarVisibility="Visible">
+                    <RichTextBox.Resources>
+                        <Style TargetType="{x:Type Paragraph}">
+                            <Setter Property="Margin" Value="0" />
+                        </Style>
+                    </RichTextBox.Resources>
+                </RichTextBox>
+
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom">
+                    <Button
+                        x:Name="showManagerButton"
+                        HorizontalAlignment="Left"
+                        Click="showManagerButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image
+                                Width="20"
+                                RenderOptions.BitmapScalingMode="HighQuality"
+                                Source="/Images/Icons/left.png" />
+                            <TextBlock
+                                Margin="5,0"
+                                VerticalAlignment="Center">
+                                Back
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <!--  Splitter  -->
+            <GridSplitter
+                Grid.Row="1"
+                Grid.Column="0"
+                Height="5"
+                HorizontalAlignment="Stretch"
+                ResizeBehavior="PreviousAndNext"
+                ResizeDirection="Rows" />
+
+            <!--  Stats Grid  -->
+            <Grid
+                Grid.Row="2"
+                Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="Margin" Value="0,-6,0,0" />
+                            <Setter Property="Foreground" Value="{DynamicResource ForegroundMain}" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <Label
+                        Margin="0"
+                        FontWeight="Bold">
+                        <DockPanel>
+                            <iconPacks:PackIconMaterialDesign
+                                Width="15"
+                                Margin="-4,1,0,0"
+                                VerticalAlignment="Center"
+                                Kind="DataUsage" />
+                            <TextBlock Margin="4,0,0,0">DATA</TextBlock>
+                        </DockPanel>
+                    </Label>
+                    <StackPanel
+                        Margin="0,1,0,0"
+                        Orientation="Horizontal">
+                        <Label Content="Total:" />
+                        <Label Content="{Binding TestedCount, Mode=OneWay}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label
+                            Content="Hits:"
+                            Foreground="{DynamicResource ForegroundGood}" />
+                        <Label
+                            Content="{Binding HitCount, Mode=OneWay}"
+                            Foreground="{DynamicResource ForegroundGood}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label
+                            Content="Custom:"
+                            Foreground="{DynamicResource ForegroundCustom}"
+                            MouseEnter="LabelCustom_MouseEnter"
+                            MouseLeave="LabelCustom_MouseLeave" />
+                        <Label
+                            Content="{Binding CustomCount, Mode=OneWay}"
+                            Foreground="{DynamicResource ForegroundCustom}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label
+                            Content="Bad:"
+                            Foreground="{DynamicResource ForegroundBad}" />
+                        <Label
+                            Content="{Binding FailCount}"
+                            Foreground="{DynamicResource ForegroundBad}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label
+                            Content="Retries:"
+                            Foreground="{DynamicResource ForegroundRetry}" />
+                        <Label
+                            Content="{Binding RetryCount}"
+                            Foreground="{DynamicResource ForegroundRetry}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label
+                            Content="To Check:"
+                            Foreground="{DynamicResource ForegroundToCheck}" />
+                        <Label
+                            Content="{Binding ToCheckCount, Mode=OneWay}"
+                            Foreground="{DynamicResource ForegroundToCheck}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label
+                            Content="OCR Rate:"
+                            Foreground="{DynamicResource ForegroundOcrRate}" />
+                        <TextBlock Foreground="{DynamicResource ForegroundOcrRate}">
+                            <Run Text="{Binding OcrRate, Mode=TwoWay}" />
+                            <Run Text="%" />
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="Foreground" Value="{DynamicResource ForegroundMain}" />
+                            <Setter Property="Margin" Value="0,-6,0,0" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <Label
+                        Margin="0,0,0,0"
+                        FontWeight="Bold">
+                        <DockPanel>
+                            <iconPacks:PackIconMaterial
+                                Width="15"
+                                Margin="-4,1,0,0"
+                                VerticalAlignment="Center"
+                                Kind="ServerNetwork" />
+                            <TextBlock
+                                Margin="4,-1,0,0"
+                                VerticalAlignment="Center">
+                                PROXIES
+                            </TextBlock>
+                        </DockPanel>
+                    </Label>
+                    <StackPanel
+                        Margin="0,1,0,0"
+                        Orientation="Horizontal">
+                        <Label Content="Total:" />
+                        <Label Content="{Binding TotalProxiesCount}" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Alive:" />
+                        <Label Content="{Binding AliveProxiesCount}" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Banned:" />
+                        <Label Content="{Binding BannedProxiesCount}" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Bad:" />
+                        <Label Content="{Binding BadProxiesCount}" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label
+                            Content="CPM:"
+                            FontWeight="Bold"
+                            ToolTip="Checks per minute" />
+                        <Label
+                            Content="{Binding CPM}"
+                            FontWeight="Bold" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label
+                            Content="Credit:"
+                            FontWeight="Bold"
+                            ToolTip="Remaining balance of your captcha solving service account" />
+                        <Label
+                            Content="{Binding BalanceString}"
+                            FontWeight="Bold" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Page>

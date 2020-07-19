@@ -1,0 +1,96 @@
+﻿<Page
+    x:Class="OpenBullet.Views.Main.Settings.RL.General"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    Title="RLSettingsGeneral"
+    d:DesignHeight="450"
+    d:DesignWidth="780"
+    mc:Ignorable="d">
+
+    <Grid Margin="3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+            <DockPanel DockPanel.Dock="Top">
+                <Label Content="Wait Time after bot end (millisec)" />
+                <xctk:IntegerUpDown
+                    Width="50"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Right"
+                    Background="{DynamicResource BackgroundMain}"
+                    Foreground="{DynamicResource ForegroundMain}"
+                    Value="{Binding WaitTime}" />
+            </DockPanel>
+            <DockPanel DockPanel.Dock="Top">
+                <Label Content="Requests Timeout (seconds)" />
+                <xctk:IntegerUpDown
+                    Width="50"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Right"
+                    Background="{DynamicResource BackgroundMain}"
+                    Foreground="{DynamicResource ForegroundMain}"
+                    Value="{Binding RequestTimeout}" />
+            </DockPanel>
+            <DockPanel DockPanel.Dock="Top">
+                <Label Content="Max number of Hits (0 = unlimited)" />
+                <xctk:IntegerUpDown
+                    Width="50"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Right"
+                    Background="{DynamicResource BackgroundMain}"
+                    Foreground="{DynamicResource ForegroundMain}"
+                    Value="{Binding MaxHits}" />
+            </DockPanel>
+            <Label
+                Content="Runner Bots Display Mode"
+                DockPanel.Dock="Top" />
+            <ComboBox
+                x:Name="botsDisplayModeCombobox"
+                DockPanel.Dock="Top"
+                SelectionChanged="botsDisplayModeCombobox_SelectionChanged" />
+            <CheckBox
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                Content="Enable Bot Log (slow, RAM-heavy)"
+                IsChecked="{Binding EnableBotLog}" />
+            <CheckBox
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                Content="Save Last Response Source (RAM-heavy)"
+                IsChecked="{Binding SaveLastSource}" />
+            <CheckBox
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                Content="Send data in process to ToCheck on abort"
+                IsChecked="{Binding SendToCheckOnAbort}" />
+            <Label
+                Content="Hits Webhook"
+                FontWeight="Bold" />
+            <CheckBox
+                Content="Enabled"
+                IsChecked="{Binding WebhookEnabled}" />
+            <Label Content="URL:" />
+            <TextBox Text="{Binding WebhookURL}" />
+            <Label Content="Username (will be received by remote API):" />
+            <TextBox Text="{Binding WebhookUser}" />
+        </StackPanel>
+
+        <StackPanel
+            Grid.Column="1"
+            Margin="10,0,0,0">
+            <CheckBox
+                Padding="0,5,0,8"
+                VerticalAlignment="Center"
+                Content="Remove Duplicate Wordlist"
+                IsChecked="{Binding RemoveDuplicateFromWordlist}" />
+        </StackPanel>
+
+    </Grid>
+</Page>
