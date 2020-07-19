@@ -17,7 +17,7 @@ Found a bug? [Create an issue!](https://help.github.com/en/articles/creating-an-
 4. You can find the executables inside the folders OpenBullet/bin/Release and OpenBulletCLI/bin/Release.
 
 # Required
-0. C++ 2015 Redistributable
+0. C++ 2015 Redistributable x64 and x86
 
 # License
 This software is licensed under the MIT License.
