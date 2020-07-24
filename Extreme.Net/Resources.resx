@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ArgumentException_HttpRequest_SetNotAvailableHeader" xml:space="preserve">
+    <value>Value of '{0}' set not available header</value>
+  </data>
+  <data name="ArgumentException_MultiThreading_BegIndexRangeMoreEndIndex" xml:space="preserve">
+    <value>Begin Index range more end index</value>
+  </data>
+  <data name="ArgumentException_OnlyAbsoluteUri" xml:space="preserve">
+    <value>Acceptable use only the absolute URI.</value>
+  </data>
+  <data name="ArgumentOutOfRangeException_CanNotBeLess" xml:space="preserve">
+    <value>The value can not be less {0}.</value>
+  </data>
+  <data name="ArgumentOutOfRangeException_CanNotBeLessOrGreater" xml:space="preserve">
+    <value>The value can not be less than {0} or {1} longer.</value>
+  </data>
+  <data name="ArgumentOutOfRangeException_StringLengthCanNotBeMore" xml:space="preserve">
+    <value>String length must not be more than {0} characters.</value>
+  </data>
+  <data name="FormatException_ProxyClient_WrongPort" xml:space="preserve">
+    <value>Invalid port specified.</value>
+  </data>
+  <data name="HttpException_ClientError" xml:space="preserve">
+    <value>The error on the client side. Status code: {0}</value>
+  </data>
+  <data name="HttpException_ConnectTimeout" xml:space="preserve">
+    <value>It turned out wait for a connection to the HTTP-server '{0}'.</value>
+  </data>
+  <data name="HttpException_FailedConnect" xml:space="preserve">
+    <value>Unable to connect to the HTTP-server '{0}'.</value>
+  </data>
+  <data name="HttpException_FailedGetHostAddresses" xml:space="preserve">
+    <value>Failed to get the host IP-address '{0}'.</value>
+  </data>
+  <data name="HttpException_FailedReceiveMessageBody" xml:space="preserve">
+    <value>Could not recieve the message body of the response HTTP-server '{0}'.</value>
+  </data>
+  <data name="HttpException_FailedReceiveResponse" xml:space="preserve">
+    <value>Failed to recieve the response from the HTTP-server '{0}'.</value>
+  </data>
+  <data name="HttpException_FailedSendRequest" xml:space="preserve">
+    <value>Failed to send HTTP-request to the server '{0}'.</value>
+  </data>
+  <data name="HttpException_FailedSslConnect" xml:space="preserve">
+    <value>Unable to establish SSL-connection with HTTP-server '{0}'.</value>
+  </data>
+  <data name="HttpException_WaitDataTimeout" xml:space="preserve">
+    <value>It turned out the wait time data from the HTTP-server '{0}'.</value>
+  </data>
+  <data name="HttpException_ReceivedEmptyResponse" xml:space="preserve">
+    <value>Received empty response from the HTTP-server '{0}'.</value>
+  </data>
+  <data name="HttpException_SeverError" xml:space="preserve">
+    <value>The error on the server side. Status code: {0}</value>
+  </data>
+  <data name="HttpException_WrongCookie" xml:space="preserve">
+    <value>Received invalid cookies '{0}' from the HTTP-server '{1}'.</value>
+  </data>
+  <data name="HttpException_WrongHeader" xml:space="preserve">
+    <value>Received invalid header "{0} 'from the HTTP-server' {1} '.</value>
+  </data>
+  <data name="InvalidOperationException_HttpResponse_HasError" xml:space="preserve">
+    <value>Unable to perform the method, because an error occurred while receiving a response.</value>
+  </data>
+  <data name="InvalidOperationException_NotSupportedEncodingFormat" xml:space="preserve">
+    <value>Received an unsupported encoding format: {0}</value>
+  </data>
+  <data name="InvalidOperationException_ProxyClient_WrongHost" xml:space="preserve">
+    <value>The host may be uncertain or have zero length.</value>
+  </data>
+  <data name="InvalidOperationException_ProxyClient_WrongPassword" xml:space="preserve">
+    <value>The password can not be more than 255 characters.</value>
+  </data>
+  <data name="InvalidOperationException_ProxyClient_WrongPort" xml:space="preserve">
+    <value>The port can not be less than 1 or greater than 65535.</value>
+  </data>
+  <data name="InvalidOperationException_ProxyClient_WrongUsername" xml:space="preserve">
+    <value>User name can not be more than 255 characters.</value>
+  </data>
+  <data name="ProxyException_CommandError" xml:space="preserve">
+    <value>{0} The proxy server '{1}'.</value>
+  </data>
+  <data name="ProxyException_ConnectTimeout" xml:space="preserve">
+    <value>It turned out the wait time to connect to the proxy server '{0}'.</value>
+  </data>
+  <data name="ProxyException_Error" xml:space="preserve">
+    <value>An error occurred while working with the proxy server '{0}'.</value>
+  </data>
+  <data name="ProxyException_FailedConnect" xml:space="preserve">
+    <value>Unable to connect to the proxy server '{0}'.</value>
+  </data>
+  <data name="ProxyException_FailedGetHostAddresses" xml:space="preserve">
+    <value>Failed to get the host IP-address '{0}'.</value>
+  </data>
+  <data name="ProxyException_NotSupportedAddressType" xml:space="preserve">
+    <value>The host '{0}' type '{1}' does not support the type Address. The following types: InterNetwork and InterNetworkV6. The proxy server '{2}'.</value>
+  </data>
+  <data name="ProxyException_ReceivedEmptyResponse" xml:space="preserve">
+    <value>Received empty response from the proxy server '{0}'.</value>
+  </data>
+  <data name="ProxyException_ReceivedWrongResponse" xml:space="preserve">
+    <value>Received an invalid response from the proxy server '{0}'.</value>
+  </data>
+  <data name="ProxyException_ReceivedWrongStatusCode" xml:space="preserve">
+    <value>Received invalid status code '{0}' on '{1}' proxy.</value>
+  </data>
+  <data name="ProxyException_Socks5_FailedAuthOn" xml:space="preserve">
+    <value>Failed to authenticate with the proxy server '{0}'.</value>
+  </data>
+  <data name="Socks4_CommandReplyRequestRejectedCannotConnectToIdentd" xml:space="preserve">
+    <value>The request failed, because things are not running identd (or not available from the server).</value>
+  </data>
+  <data name="Socks4_CommandReplyRequestRejectedDifferentIdentd" xml:space="preserve">
+    <value>The request failed because client's identd could not confirm the user ID in the query.</value>
+  </data>
+  <data name="Socks4_CommandReplyRequestRejectedOrFailed" xml:space="preserve">
+    <value>Query rejected or erroneous.</value>
+  </data>
+  <data name="Socks5_AuthMethodReplyNoAcceptableMethods" xml:space="preserve">
+    <value>The proposed authentication methods are supported.</value>
+  </data>
+  <data name="Socks5_CommandReplyAddressTypeNotSupported" xml:space="preserve">
+    <value>Address type not supported.</value>
+  </data>
+  <data name="Socks5_CommandReplyCommandNotSupported" xml:space="preserve">
+    <value>The command is not supported or protocol error.</value>
+  </data>
+  <data name="Socks5_CommandReplyConnectionNotAllowedByRuleset" xml:space="preserve">
+    <value>Connecting a set of rules is prohibited.</value>
+  </data>
+  <data name="Socks5_CommandReplyConnectionRefused" xml:space="preserve">
+    <value>Connection refused.</value>
+  </data>
+  <data name="Socks5_CommandReplyGeneralSocksServerFailure" xml:space="preserve">
+    <value>Error SOCKS-server.</value>
+  </data>
+  <data name="Socks5_CommandReplyHostUnreachable" xml:space="preserve">
+    <value>Host unreachable.</value>
+  </data>
+  <data name="Socks5_CommandReplyNetworkUnreachable" xml:space="preserve">
+    <value>The network is not available.</value>
+  </data>
+  <data name="Socks5_CommandReplyTTLExpired" xml:space="preserve">
+    <value>Expired TTL.</value>
+  </data>
+  <data name="Socks_UnknownError" xml:space="preserve">
+    <value>Unknown error.</value>
+  </data>
+  <data name="ArgumentException_EmptyString" xml:space="preserve">
+    <value>Value has not been empty string</value>
+  </data>
+  <data name="ArgumentOutOfRangeException_StringHelper_MoreLengthString" xml:space="preserve">
+    <value>The starting position can not be more than the length of the string.</value>
+  </data>
+  <data name="DirectoryNotFoundException_DirectoryNotFound" xml:space="preserve">
+    <value>he path points to a nonexistent directory {0}.</value>
+  </data>
+  <data name="HttpException_Default" xml:space="preserve">
+    <value>An error when handling HTTP protocol.</value>
+  </data>
+  <data name="NetException_Default" xml:space="preserve">
+    <value>An error occurred while working with the network.</value>
+  </data>
+  <data name="ProxyException_Default" xml:space="preserve">
+    <value>An error occurred while working with the proxy.</value>
+  </data>
+  <data name="HttpException_ReceivedWrongResponse" xml:space="preserve">
+    <value>Received an invalid response from the HTTP-server '{0}'.</value>
+  </data>
+  <data name="ProxyException_WaitDataTimeout" xml:space="preserve">
+    <value>It turned out the wait time data from the proxy server '{0}'.</value>
+  </data>
+  <data name="HttpException_LimitRedirections" xml:space="preserve">
+    <value>Have exceeded the maximum number of consecutive redirects.</value>
+  </data>
+  <data name="HttpException_WrongChunkedBlockLength" xml:space="preserve">
+    <value>Received invalid data block size when using Chunked: {0}</value>
+  </data>
+  <data name="InvalidOperationException_ChainProxyClient_NotProxies" xml:space="preserve">
+    <value>Do not set any proxy for the chain.</value>
+  </data>
+  <data name="ArgumentOutOfRangeException_CanNotBeGreater" xml:space="preserve">
+    <value>The value can not be more than {0}.</value>
+  </data>
+  <data name="ArgumentException_CanNotReadOrSeek" xml:space="preserve">
+    <value>Thread can not read or seek</value>
+  </data>
+  <data name="ArgumentException_WrongPath" xml:space="preserve">
+    <value>The path is an empty string, contains only white space, or contains invalid characters.</value>
+  </data>
+</root>
