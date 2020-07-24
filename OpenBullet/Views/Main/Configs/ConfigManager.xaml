@@ -131,10 +131,11 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
-                <TextBox TextChanged="filterTextbox_TextChanged"
+                <TextBox
                     x:Name="filterTextbox"
                     KeyDown="filterTextbox_KeyDown"
-                    Text="{Binding SearchString}" />
+                    Text="{Binding SearchString}"
+                    TextChanged="filterTextbox_TextChanged" />
                 <Button
                     x:Name="searchButton"
                     Grid.Column="1"
@@ -198,8 +199,11 @@
         <ListView
             x:Name="configsListView"
             Grid.Row="2"
+            AllowDrop="True"
             Background="Transparent"
             BorderThickness="1"
+            DragEnter="configsListView_DragEnter"
+            Drop="configsListView_Drop"
             Foreground="{DynamicResource ForegroundMain}"
             ItemsSource="{Binding Path=ConfigsCollection}"
             SelectionChanged="configsListView_SelectionChanged"

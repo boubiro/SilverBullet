@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -264,7 +265,7 @@ namespace OpenBullet.Views.Main.Configs
             settings.Name = name;
             settings.Author = author;
 
-            var newConfig = new ConfigViewModel(name, category, new Config(settings, string.Empty));
+            var newConfig = new ConfigViewModel(string.Empty, name, category, new Config(settings, string.Empty));
 
             // Add it to the collection and persistent storage
             vm.Add(newConfig);
@@ -332,46 +333,51 @@ namespace OpenBullet.Views.Main.Configs
                 {
                     var pathConfig = (dataObject.GetData(DataFormats.FileDrop)
                         as string[]).FirstOrDefault();
-                    var confExtension = Path.GetExtension(pathConfig);
-                    if (pathConfig != null && confExtension == ".svb" ||
-                        confExtension == ".loli" || confExtension == ".loliX" ||
-                        confExtension == ".anom")
-                    {
-                        if (!File.Exists(pathConfig)) return;
-
-                        var configName = Path.GetFileName(pathConfig);
-                        var dst = Environment.CurrentDirectory + "\\Configs\\" + configName;
-                        if (File.Exists($"Configs\\{configName}"))
-                        {
-                            if (MessageBox.Show
-                               ("The File you want to copy already exists. Do you want to replace it?", $"File exists [{Path.GetFileNameWithoutExtension(pathConfig)}]", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                            {
-                                var b = pathConfig == dst;
-                                if (!b)
-                                {
-                                    File.Delete(dst);
-                                }
-                                File.Copy(pathConfig, $"Configs\\{configName}", b);
-                                rescanConfigsButton_Click(null, null);
-                                return;
-                            }
-                            else
-                            {
-                                var fullPath = $"Configs\\{ Path.GetFileName(pathConfig)}"
-                                    .Rename();
-                                File.Copy(pathConfig, fullPath, false);
-                                rescanConfigsButton_Click(null, null);
-                                return;
-                            }
-                        }
-                        File.Copy(pathConfig, $"Configs\\{Path.GetFileName(pathConfig)}", false);
-                        rescanConfigsButton_Click(null, null);
-                    }
+                    PasteConfig(pathConfig);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "ERROR");
+                SB.Logger.Log(ex.Message, LogLevel.Error, true);
+            }
+        }
+
+        private void PasteConfig(string path)
+        {
+            var confExtension = Path.GetExtension(path);
+            if (path != null && confExtension == ".svb" ||
+                confExtension == ".loli" || confExtension == ".loliX" ||
+                confExtension == ".anom")
+            {
+                if (!File.Exists(path)) return;
+
+                var configName = Path.GetFileName(path);
+                var dst = Environment.CurrentDirectory + "\\Configs\\" + configName;
+                if (File.Exists($"Configs\\{configName}"))
+                {
+                    if (MessageBox.Show
+                       ("The File you want to copy already exists. Do you want to replace it?", $"File exists [{Path.GetFileNameWithoutExtension(path)}]", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        var b = path == dst;
+                        if (!b)
+                        {
+                            File.Delete(dst);
+                        }
+                        File.Copy(path, $"Configs\\{configName}", b);
+                        rescanConfigsButton_Click(null, null);
+                        return;
+                    }
+                    else
+                    {
+                        var fullPath = $"Configs\\{ Path.GetFileName(path)}"
+                            .Rename();
+                        File.Copy(path, fullPath, false);
+                        rescanConfigsButton_Click(null, null);
+                        return;
+                    }
+                }
+                File.Copy(path, $"Configs\\{Path.GetFileName(path)}", false);
+                rescanConfigsButton_Click(null, null);
             }
         }
 
@@ -395,6 +401,42 @@ namespace OpenBullet.Views.Main.Configs
                 {
                     searchButton_Click(sender, null);
                 }
+            }
+            catch { }
+        }
+
+        private void configsListView_DragEnter(object sender, DragEventArgs e)
+        {
+            try
+            {
+                if (e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop))
+                    e.Effects = System.Windows.DragDropEffects.Copy;
+            }
+            catch { }
+        }
+
+        private void configsListView_Drop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                var locations = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop);
+                Task.Run(() =>
+                {
+                    for (var i = 0; i < locations.Length; i++)
+                    {
+                        try
+                        {
+                            var loc = locations[i];
+
+                            if ((loc.EndsWith(".svb") || loc.EndsWith(".loli") ||
+                            loc.EndsWith(".anom")||loc.EndsWith(".loliX")) && File.Exists(loc))
+                            {
+                                Dispatcher.Invoke(() => PasteConfig(loc));
+                            }
+                        }
+                        catch { }
+                    }
+                });
             }
             catch { }
         }
