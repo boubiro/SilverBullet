@@ -14,23 +14,27 @@
         <Label Content="Left:" />
         <TextBox
             Name="LeftTextBox"
+            Text="0"
             TextChanged="TextBoxCL_TextChanged" />
         <Label Content="Top:" />
         <TextBox
             Name="TopTextBox"
+            Text="0"
             TextChanged="TextBoxCL_TextChanged" />
         <Label Content="Right:" />
         <TextBox
             Name="RightTextBox"
+            Text="0"
             TextChanged="TextBoxCL_TextChanged" />
         <Label Content="Bottom:" />
         <TextBox
             Name="BottomTextBox"
+            Text="0"
             TextChanged="TextBoxCL_TextChanged" />
         <Label Content="Crop Mode:" />
         <ComboBox
             Name="CropModeBox"
-            SelectedIndex="0"
+            SelectedIndex="1"
             SelectionChanged="CropModeBox_SelectionChanged" />
     </StackPanel>
 </UserControl>
