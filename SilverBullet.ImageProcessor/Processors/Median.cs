@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using ImageProcessor.Common.Exceptions;
 using SilverBullet.ImageProcessor.Imaging.Helpers;
 
 namespace ImageProcessor.Processors
@@ -11,9 +13,16 @@ namespace ImageProcessor.Processors
 
         public Image ProcessImage(ImageFactory factory)
         {
-            var ksize = (int)DynamicParameter;
-            return ImageHelper.OpenCvProcessor(factory.Bitmap,
-                (src) => src.MedianBlur(ksize));
+            try
+            {
+                var ksize = (int)DynamicParameter;
+                return ImageHelper.OpenCvProcessor(factory.Bitmap,
+                    (src) => src.MedianBlur(ksize));
+            }
+            catch (Exception ex)
+            {
+                throw new ImageProcessingException("Error processing image with " + this.GetType().Name, ex);
+            }
         }
     }
 }
