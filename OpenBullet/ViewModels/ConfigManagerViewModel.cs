@@ -1,13 +1,4 @@
-﻿using Extreme.Net;
-using OpenBullet.Models;
-using OpenBullet.Repositories;
-using PluginFramework;
-using RuriLib;
-using RuriLib.Functions.Formats;
-using RuriLib.Interfaces;
-using RuriLib.LS;
-using RuriLib.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -16,8 +7,15 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Windows;
 using System.Windows.Data;
+using OpenBullet.Models;
+using OpenBullet.Repositories;
+using PluginFramework;
+using RuriLib;
+using RuriLib.Functions.Formats;
+using RuriLib.Interfaces;
+using RuriLib.LS;
+using RuriLib.ViewModels;
 
 namespace OpenBullet.ViewModels
 {
@@ -183,7 +181,7 @@ namespace OpenBullet.ViewModels
                                 {
                                     var text = tr.ReadToEnd();
                                     var cfg = IOManager.DeserializeConfig(text);
-                                    configs.Add(new ConfigViewModel("", category, cfg, true));
+                                    configs.Add(new ConfigViewModel(string.Empty, "", category, cfg, true));
                                 }
                             }
                         }
