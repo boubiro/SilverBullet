@@ -50,13 +50,8 @@
     <Reference Include="Esprima, Version=1.0.1258.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
       <HintPath>..\packages\Esprima.1.0.1258\lib\net45\Esprima.dll</HintPath>
     </Reference>
-    <Reference Include="Extreme.Net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Extreme.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Humanizer, Version=2.8.0.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
+    <Reference Include="Humanizer">
       <HintPath>..\packages\Humanizer.Core.2.8.26\lib\netstandard2.0\Humanizer.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="ICSharpCode.AvalonEdit, Version=6.0.1.278, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
       <HintPath>..\packages\AvalonEdit.6.0.1\lib\net45\ICSharpCode.AvalonEdit.dll</HintPath>
@@ -78,9 +73,6 @@
     </Reference>
     <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
-    </Reference>
-    <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.19.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\packages\Magick.NET-Q16-AnyCPU.7.19.0.1\lib\net40\Magick.NET-Q16-AnyCPU.dll</HintPath>
     </Reference>
     <Reference Include="Magick.NET.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
       <HintPath>..\packages\Magick.NET.Core.2.0.0\lib\net40\Magick.NET.Core.dll</HintPath>
@@ -400,6 +392,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Extreme.Net\Extreme.Net.csproj">
+      <Project>{5d25d06e-0d35-42ef-bba2-d5de6e06cd04}</Project>
+      <Name>Extreme.Net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SilverBullet.ImageProcessor\SilverBullet.ImageProcessor.csproj">
       <Project>{0a8b141b-e5f3-4f7f-ba88-183668361b42}</Project>
       <Name>SilverBullet.ImageProcessor</Name>
