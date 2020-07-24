@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:myvms="[myvms ]clr-namespace:OpenBullet.ViewModels"
     xmlns:runner="clr-namespace:RuriLib.Runner;assembly=RuriLib"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     Title="Runner"
     d:DesignHeight="550"
     d:DesignWidth="780"
@@ -189,11 +190,28 @@
                         VerticalAlignment="Center"
                         Content="Bots:"
                         DockPanel.Dock="Left" />
-                    <Label
-                        Width="35"
+                    <TextBox
+                        Width="22"
+                        Margin="3,0"
                         VerticalAlignment="Center"
-                        Content="{Binding BotsAmount}"
-                        DockPanel.Dock="Left" />
+                        Background="{DynamicResource BackgroundMain}"
+                        BorderThickness="0"
+                        DockPanel.Dock="Left"
+                        Foreground="{DynamicResource ForegroundMain}"
+                        MaxLength="3"
+                        PreviewTextInput="TextBox_PreviewTextInput"
+                        Text="{Binding BotsAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextAlignment="Center">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu />
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                     <Slider
                         x:Name="botsSlider"
                         Margin="0,0,10,0"
@@ -202,7 +220,7 @@
                         Minimum="1"
                         TickFrequency="20"
                         TickPlacement="Both"
-                        Value="{Binding BotsAmount, Mode=TwoWay}" />
+                        Value="{Binding BotsAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
                 <StackPanel
                     Grid.Row="1"

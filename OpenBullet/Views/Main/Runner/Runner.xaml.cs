@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Media;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -482,6 +483,28 @@ namespace OpenBullet.Views.Main.Runner
         public void LabelCustom_MouseLeave(object sender, MouseEventArgs e)
         {
             try { (e.OriginalSource as Label).ToolTip = null; } catch { }
+        }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            try
+            {
+                Regex regex = new Regex("[^0-9]+");
+                e.Handled = regex.IsMatch(e.Text);
+                if (!e.Handled)
+                {
+                    var textBox = (TextBox)sender;
+                    var value = textBox.Text;
+                    if (textBox.SelectedText != string.Empty)
+                    {
+                        value = textBox.Text.Remove(textBox.SelectionStart,
+                           textBox.SelectedText.Length);
+                    }
+                    var botsAmount = int.Parse(value + e.Text);
+                    e.Handled = !(botsAmount <= botsSlider.Maximum && botsAmount > botsSlider.Minimum - 1);
+                }
+            }
+            catch { }
         }
     }
 }
