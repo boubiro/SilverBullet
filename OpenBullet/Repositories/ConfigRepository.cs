@@ -55,18 +55,19 @@ namespace OpenBullet.Repositories
             bool loliX = false;
             // Load the configs in the root folder
             foreach (var file in Directory.EnumerateFiles(SB.configFolder)
-                .Where(file => file.EndsWith(".svb") || file.EndsWith(".loli") || 
+                .Where(file => file.EndsWith(".svb") || file.EndsWith(".loli") ||
                 file.EndsWith(".anom") ||
                (loliX = file.EndsWith(".loliX"))))
             {
                 try
                 {
-                    configs.Add(new ConfigViewModel(
+                    configs.Add(new ConfigViewModel(file,
                         Path.GetFileNameWithoutExtension(file),
                         defaultCategory,
                         IOManager.LoadConfig(file, loliX)));
+                    loliX = false;
                 }
-                catch { }
+                catch { loliX = false; }
             }
 
             // Load the configs in the subfolders
@@ -76,7 +77,7 @@ namespace OpenBullet.Repositories
                 {
                     try
                     {
-                        configs.Add(new ConfigViewModel(
+                        configs.Add(new ConfigViewModel(file,
                             Path.GetFileNameWithoutExtension(file),
                             Path.GetFileName(categoryFolder),
                             IOManager.LoadConfig(file)));
@@ -93,14 +94,14 @@ namespace OpenBullet.Repositories
             var category = id.Item1;
             var fileName = id.Item2;
 
-            var path = GetPath(category, fileName);
+            var path = GetPath(category, fileName, string.Empty);
 
-            return new ConfigViewModel(fileName, category, IOManager.LoadConfig(path));
+            return new ConfigViewModel(path, fileName, category, IOManager.LoadConfig(path));
         }
 
         public void Remove(ConfigViewModel entity)
         {
-            var path = GetPath(entity);
+            var path = GetPath(entity.Category, entity.FileName, Path.GetExtension(entity.Path));
 
             if (File.Exists(path))
             {
@@ -161,13 +162,13 @@ namespace OpenBullet.Repositories
 
         private string GetPath(ConfigViewModel config)
         {
-            return GetPath(config.Category, config.FileName);
+            return GetPath(config.Category, config.FileName, string.Empty);
         }
 
         //
-        private string GetPath(string category, string fileName)
+        private string GetPath(string category, string fileName, string suffix)
         {
-            var file = $"{fileName}.{Suffix}";
+            var file = $"{fileName}.{(string.IsNullOrEmpty(suffix) ? Suffix : suffix.Remove(0, 1))}";
 
             if (category != defaultCategory)
             {
