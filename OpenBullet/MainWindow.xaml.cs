@@ -54,7 +54,7 @@ namespace OpenBullet
 
         System.Windows.Point _startPosition;
         bool _isResizing = false;
-        bool _canMinimize, _canQuit, _canMaximize, maximized;
+        bool _canMinimize, _canQuit, _canMaximize;
 
         public MainWindow()
         {
@@ -426,7 +426,7 @@ namespace OpenBullet
                     using (Process.Start(url)) ;
                 })) ;
             }
-            catch(InvalidOperationException){ }
+            catch (InvalidOperationException) { }
             catch (NullReferenceException) { }
             catch (Exception ex)
             {
@@ -440,7 +440,7 @@ namespace OpenBullet
             {
                 Process.Start("tg://resolve?domain=SilverBulletSoft");
             }
-            catch(Exception ex) { }
+            catch (Exception ex) { }
         }
 
         #endregion
@@ -536,10 +536,8 @@ namespace OpenBullet
                         MaxHeight = screen.WorkingArea.Height;
                         MaxWidth = screen.WorkingArea.Width;
                         WindowState = WindowState.Maximized;
-                        maximized = true;
                         return;
                     }
-                    maximized = false;
                     WindowState = WindowState.Normal;
                 }
             }
@@ -583,8 +581,8 @@ namespace OpenBullet
         {
             if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
             {
-                WindowState = WindowState == WindowState.Maximized ? WindowState.Normal :
-                    WindowState.Maximized;
+                _canMaximize = true;
+                maximizePanel_MouseLeftButtonUp(sender,e);
             }
         }
 
