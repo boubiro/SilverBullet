@@ -1,0 +1,61 @@
+﻿<Page
+    x:Class="OpenBullet.Views.Dialogs.DialogEditWordlist"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="DialogEditWordlist"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    KeyDown="Page_KeyDown"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
+
+    <StackPanel>
+        <DockPanel>
+            <Label Content="Name:" />
+            <TextBox
+                x:Name="wordlistName"
+                Margin="12,0,0,0" />
+        </DockPanel>
+        <DockPanel>
+            <Label Content="Path:" />
+            <TextBox
+                x:Name="wordlistPath"
+                Margin="20,0,0,0" />
+        </DockPanel>
+        <DockPanel>
+            <Label Content="Type:" />
+            <ComboBox
+                x:Name="wordlistType"
+                Margin="19,0,0,0" />
+        </DockPanel>
+        <DockPanel>
+            <Label Content="Purpose:" />
+            <TextBox
+                x:Name="wordlistPurpose"
+                Margin="0,0,0,0" />
+        </DockPanel>
+        <DockPanel Margin="56,0,0,0">
+            <Button
+                Width="150"
+                HorizontalAlignment="Left"
+                Click="Button_Click_1">
+                <DockPanel>
+                    <iconPacks:PackIconFontAwesome Kind="CheckCircleRegular" />
+                    <TextBlock Margin="5,0">Accept</TextBlock>
+                </DockPanel>
+            </Button>
+            <Button
+                Width="150"
+                HorizontalAlignment="Right"
+                Click="Button_Click">
+                <DockPanel>
+                    <iconPacks:PackIconUnicons Kind="TimesCircle" />
+                    <TextBlock Margin="5,0">Canel</TextBlock>
+                </DockPanel>
+            </Button>
+        </DockPanel>
+    </StackPanel>
+</Page>
