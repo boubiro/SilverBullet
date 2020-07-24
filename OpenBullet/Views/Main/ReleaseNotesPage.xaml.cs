@@ -12,6 +12,14 @@ namespace OpenBullet.Views.Main
         {
             InitializeComponent();
             AppendNote(new[] {
+               "Supported drag drop wordlist,proxy,config",
+               "Fixed maximum mainwindow",
+               "Fixed load loliX config",
+               "Added input box for bots",
+               "Added Analyze login page (block request)",
+               "Updated wordlist tools",
+            });
+            AppendNote(new[] {
                 "Bugs fixed",
                 "Supported format loli,loliX,anom",
                 "Added find and replace dialog in LoliScript editor",
@@ -30,7 +38,7 @@ namespace OpenBullet.Views.Main
                 "Added subwordlist",
                 "Added multiple wordlist",
                 "Added disable automation in selenium (settings)",
-                "Added new icons and updated previous icons", 
+                "Added new icons and updated previous icons",
                 "Added generate randomUA android and ios (function)",
                 "Added editable custom (key check)",
                 "Added show all custom types by hovering the mouse over the custom label",

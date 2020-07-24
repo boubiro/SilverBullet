@@ -32,7 +32,7 @@
             <FlowDocument PagePadding="8 3 5 5">
                 <Paragraph>
                     <Bold Foreground="{DynamicResource ForegroundMain}">
-                        Silver Bullet 1.0.0
+                        Silver Bullet 1.0.1
                         <LineBreak />
                         ========================
                     </Bold>
