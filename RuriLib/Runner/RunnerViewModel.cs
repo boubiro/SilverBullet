@@ -410,14 +410,14 @@ namespace RuriLib.Runner
         /// </summary>
         public void Stop()
         {
-            _ocrEngine.StopEngines();
+            try { if (Config.OcrNeeded) _ocrEngine?.StopEngines(); } catch { }
             if (Master.IsBusy) Master.CancelAsync();
             RaiseMessageArrived(LogLevel.Info, "Sent cancellation request to Master Worker", false);
             Master.Status = WorkerStatus.Stopping;
             OnPropertyChanged("Busy");
             OnPropertyChanged("ControlsEnabled");
             RaiseWorkerStatusChanged();
-            _ocrEngine.DisposeEngines();
+            try { if (Config.OcrNeeded) _ocrEngine?.DisposeEngines(); } catch { }
         }
 
         /// <summary>
@@ -494,7 +494,7 @@ namespace RuriLib.Runner
             GlobalVariables = new VariableList();
             GlobalCookies = new CookieDictionary();
             _ocrEngine?.DisposeEngines();
-            if (_ocrEngine == null)
+            if (_ocrEngine == null && Config.OcrNeeded)
                 _ocrEngine = new OcrEngine();
 
             // We need to dispatch this to the main thread because these change the observable collections, hence changing the UI
@@ -1098,7 +1098,7 @@ TOCHECK:
                 for (var i = 0; i < DataPool.Sublists.Count; i++)
                 {
                     data += DataPool.Sublists[i]
-                       .Skip(StartingPoint - 1) + seprator;
+                       .Skip(StartingPoint - 1).First() + seprator;
 
                     DataPool.Sublists[i] =
                          DataPool.Sublists[i]
