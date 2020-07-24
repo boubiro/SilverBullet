@@ -1,17 +1,15 @@
-﻿using Extreme.Net;
-using RuriLib.Functions.Formats;
-using RuriLib.LS;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
-using RuriLib.Functions.Requests;
+using Extreme.Net;
 using RuriLib.Functions.Files;
+using RuriLib.Functions.Requests;
+using RuriLib.LS;
 using MultipartContent = RuriLib.Functions.Requests.MultipartContent;
 
 namespace RuriLib
@@ -151,7 +149,7 @@ namespace RuriLib
         private string outputVariable = "";
         /// <summary>The variable name for Base64String response.</summary>
         public string OutputVariable { get { return outputVariable; } set { outputVariable = value; OnPropertyChanged(); } }
-        
+
         private bool saveAsScreenshot = false;
         /// <summary>Whether to add the downloaded image to the default screenshot path.</summary>
         public bool SaveAsScreenshot { get { return saveAsScreenshot; } set { saveAsScreenshot = value; OnPropertyChanged(); } }
@@ -333,7 +331,7 @@ namespace RuriLib
                     break;
 
                 case RequestType.Multipart:
-                    foreach(var c in MultipartContents)
+                    foreach (var c in MultipartContents)
                     {
                         writer
                             .Indent()
@@ -426,7 +424,7 @@ namespace RuriLib
 
             var localUrl = ReplaceValues(Url, data);
             data.Log(new LogEntry($"Calling URL: {localUrl}", Colors.MediumTurquoise));
-            
+
             // Set content
             switch (RequestType)
             {
@@ -463,8 +461,8 @@ namespace RuriLib
 
             // Set headers
             data.Log(new LogEntry("Sent Headers:", Colors.DarkTurquoise));
-            var headers = CustomHeaders.Select( h =>
-                    new KeyValuePair<string, string> (ReplaceValues(h.Key, data), ReplaceValues(h.Value, data))
+            var headers = CustomHeaders.Select(h =>
+                   new KeyValuePair<string, string>(ReplaceValues(h.Key, data), ReplaceValues(h.Value, data))
                 ).ToDictionary(h => h.Key, h => h.Value);
             request.SetHeaders(headers, AcceptEncoding, GetLogBuffer(data));
 
@@ -611,12 +609,13 @@ namespace RuriLib
         public void SetMultipartContents(string[] lines)
         {
             MultipartContents.Clear();
-            foreach(var line in lines)
+            foreach (var line in lines)
             {
                 try
                 {
                     var split = line.Split(new[] { ':' }, 3);
-                    MultipartContents.Add(new MultipartContent() {
+                    MultipartContents.Add(new MultipartContent()
+                    {
                         Type = (MultipartContentType)Enum.Parse(typeof(MultipartContentType), split[0].Trim(), true),
                         Name = split[1].Trim(),
                         Value = split[2].Trim()
@@ -629,5 +628,167 @@ namespace RuriLib
         #endregion
 
         private List<LogEntry> GetLogBuffer(BotData data) => data.GlobalSettings.General.EnableBotLog || data.IsDebug ? data.LogBuffer : null;
+
+        /// <summary>
+        /// analyze login page
+        /// item1 -> action url
+        /// item2 -> data
+        /// item3 -> cookie
+        /// </summary>
+        public Tuple<string, string, string> Analyze()
+        {
+            var statusCode = string.Empty;
+            var source = string.Empty;
+            var cookies = string.Empty;
+            var data = string.Empty;
+            var dataSet = string.Empty;
+            var actionUrl = string.Empty;
+            HttpRequest request = null;
+            Tuple<HttpResponse, MemoryStream> response = null;
+            CookieDictionary cookie = new CookieDictionary();
+
+            using (request = new HttpRequest()
+            {
+                KeepAlive = true,
+                IgnoreProtocolErrors = true,
+                AllowAutoRedirect = false,
+                EnableEncodingContent = true,
+                ReadWriteTimeout = 10000,
+                ConnectTimeout = 10000,
+                Cookies = cookie,
+            })
+            {
+
+                Request.HttpReqSetHeaders(request, CustomHeaders, AcceptEncoding);
+                response = request.Get(new Uri(Url));
+
+                using (var reader = new StreamReader(response.Item2))
+                {
+                    source = reader.ReadToEnd();
+                }
+
+                statusCode = ((int)response.Item1.StatusCode).ToString();
+                cookies = response.Item1.Cookies.ToString();
+
+                if (statusCode == "301" || statusCode == "302" || statusCode == "303" || statusCode == "307")
+                {
+                    do
+                    {
+
+                        var location = response.Item1.Location.IndexOf("://", StringComparison.Ordinal) == -1 ?
+                            response.Item1.Address : new Uri(response.Item1.Location);
+
+                        request.Cookies = cookie;
+                        Request.HttpReqSetHeaders(request, CustomHeaders, AcceptEncoding);
+                        response = request.Get(new Uri(Url));
+                        using (var reader = new StreamReader(response.Item2))
+                        {
+                            source = reader.ReadToEnd();
+                        }
+                        cookies = response.Item1.Cookies.ToString();
+                    }
+                    while (response.Item1.StatusCode == Extreme.Net.HttpStatusCode.OK);
+                }
+
+                //else if (statusCode == "200")
+                //{
+                //    request.Cookies = cookie;
+                //    response = request.Get(new Uri(Url));
+                //    using (var reader = new StreamReader(response.Item2))
+                //    {
+                //        source = reader.ReadToEnd();
+                //    }
+                //    cookies = response.Item1.Cookies.ToString();
+                //}
+
+                if (source.Contains("<form"))
+                {
+                    var ind = 0;
+                    int num = source.IndexOf("<form");
+                    while (num != -1)
+                    {
+                        num = source.IndexOf("<form", num + 1);
+                        ind++;
+                    }
+                    var beTag = "<form";
+                    var endTag = "</form>";
+
+
+                    var formTag = string.Empty;
+                    for (int i = 1; i <= ind; i++)
+                    {
+                        string text1 = source.Split(new[] { beTag }, StringSplitOptions.None)[i];
+                        string text2 = text1.Split(new[] { endTag }, StringSplitOptions.None)[0];
+                        if (((!text2.ToLower().Contains("register") & !text2.ToLower().Contains("search")) &&
+                            text2.ToLower().Contains("post")) || text2.ToLower().Contains("login"))
+                        {
+                            formTag = text2;
+                            break;
+                        }
+                    }
+
+                    string act = string.Empty;
+                    if (formTag.Contains("action='"))
+                        act = "action=''";
+                    else
+                        act = "action=\"\"";
+
+                    actionUrl = WebUtility.HtmlDecode(Regex.Match(formTag, act.Substring(0, act.Length - 1) + "(.*?)" + act.Last()).Groups[1].Value);
+
+                    if (string.IsNullOrWhiteSpace(actionUrl))
+                    {
+                        if (actionUrl.IndexOf("://", StringComparison.Ordinal) == -1)
+                        {
+                            actionUrl = response.Item1.Address.ToString();
+                        }
+                    }
+                    formTag = formTag.Replace("<label>", "<input");
+                    formTag = formTag.Replace("<button", "<input");
+
+                    var matches = Regex.Matches(formTag, "<input" + "*(.+?)" + ">");
+                    for (var i = 0; i < matches.Count; i++)
+                    {
+                        data = matches[i].Groups[1].Value;
+                        data = data.Replace("name='", "name=\"");
+                        data = data.Replace("name = '", "name=\"");
+                        data = data.Replace("value='", "value=\"");
+                        data = data.Replace("'", "\"");
+                        var name = string.Empty;
+                        var valueType = string.Empty;
+                        if (!data.Contains("name=\""))
+                        {
+                            name = Regex.Match(data, "name=(.*?) ").Groups[1].Value;
+                        }
+                        else
+                        {
+                            name = Regex.Match(data, "name=\"(.*?)\"").Groups[1].Value;
+                        }
+                        if (!data.Contains("type=\""))
+                        {
+                            valueType = Regex.Match(data, "type=(.*?) ").Groups[1].Value;
+                        }
+                        else
+                        {
+                            valueType = Regex.Match(data, "type=\"(.*?)\"").Groups[1].Value;
+                        }
+                        var value = Regex.Match(data, "value=\"(.*?)\"").Groups[1].Value;
+
+                        if (!string.IsNullOrEmpty(name))
+                        {
+                            if (string.IsNullOrEmpty(dataSet))
+                                dataSet = WebUtility.UrlEncode(name) + "=" + WebUtility.UrlEncode(value);
+                            else dataSet += "&" + WebUtility.UrlEncode(name) + "=" + WebUtility.UrlEncode(value);
+                        }
+                    }
+                }
+
+                else
+                {
+                    throw new WebException(response.Item1.StatusCode.ToString() + $" ({(int)response.Item1.StatusCode})");
+                }
+
+                return new Tuple<string, string, string>(actionUrl.StartsWith("/") ? (Url.Split(':')[0] + "://" + new Uri(Url).Host + actionUrl) : actionUrl, dataSet, cookies);
+            }
+        }
     }
 }
