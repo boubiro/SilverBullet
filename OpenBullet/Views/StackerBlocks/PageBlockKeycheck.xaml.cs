@@ -155,8 +155,7 @@ namespace OpenBullet.Views.StackerBlocks
         {
             try
             {
-                ((Image)e.OriginalSource).Width = 17;
-                ((Image)e.OriginalSource).Height = 18;
+                addKeychainIcon.Width = 20;
             }
             catch { }
         }
@@ -165,7 +164,7 @@ namespace OpenBullet.Views.StackerBlocks
         {
             try
             {
-                ((Image)e.OriginalSource).Width = 15;
+                addKeychainIcon.Width = 18;
             }
             catch { }
         }
