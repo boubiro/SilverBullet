@@ -282,6 +282,36 @@ namespace RuriLib.Functions.Requests
             return this;
         }
 
+
+        /// <summary>
+        /// Sets the headers to be sent in the request.
+        /// </summary>
+        /// <param name="headers">The headers dictionary</param>
+        /// <param name="acceptEncoding">Whether to set the Accept-Encoding header automatically</param>
+        /// <param name="log">The log (if any)</param>
+        /// <returns>The request itself</returns>
+        public static HttpRequest HttpReqSetHeaders(HttpRequest request,Dictionary<string, string> headers, 
+            bool acceptEncoding = true, List<LogEntry> log = null)
+        {
+            // Set headers
+            foreach (var header in headers)
+            {
+                try
+                {
+                    var replacedKey = header.Key.Replace("-", "").ToLower(); // Used to compare with the HttpHeader enum
+
+                    if (replacedKey == "acceptencoding" && acceptEncoding) { continue; } // Disregard additional Accept-Encoding headers
+                    // else if (fixedNames.Contains(replacedKey)) request.AddHeader((HttpHeader)Enum.Parse(typeof(HttpHeader), replacedKey, true), val);
+                    else request.AddHeader(header.Key, header.Value);
+
+                    if (log != null) log.Add(new LogEntry($"{header.Key}: {header.Value}", Colors.MediumTurquoise));
+                }
+                catch { }
+            }
+
+            return request;
+        }
+
         /// <summary>
         /// Performs a request.
         /// </summary>
