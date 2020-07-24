@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace ImageProcessor.Processors
 {
@@ -8,43 +10,53 @@ namespace ImageProcessor.Processors
         public dynamic DynamicParameter { get; set; }
         public Dictionary<string, string> Settings { get; set; }
 
+        static object locker = new object();
+
         public Image ProcessImage(ImageFactory factory)
         {
             var b = factory.Bitmap;
-            for (int x = 0; x < b.Width; x++)
-            {
-                for (int y = 0; y < b.Height; y++)
-                {
-                    Color c = b.GetPixel(x, y);
-                    if ((c.R + c.G + c.B) / 3 > 0x60)
-                        b.SetPixel(x, y, Color.White);
-                    else
-                        b.SetPixel(x, y, Color.Black);
-                }
-            }
 
-            for (int x = 0; x < b.Width; x++)
+            var options = new ParallelOptions()
             {
-                for (int y = 0; y < b.Height; y++)
+                MaxDegreeOfParallelism = Environment.ProcessorCount - 1
+            };
+
+            var width = b.Width;
+            var height = b.Height;
+            Parallel.For(0, width, options, x =>
+            {
+                Parallel.For(0, height, options, y =>
                 {
-                    Color c = b.GetPixel(x, y);
-                    if (c != Color.White)
-                    {
-                        int size = 0;
-                        Bitmap tmp = (Bitmap)b.Clone();
-                        CalcArea(ref tmp, x, y, ref size);
-                        if (size < 60)
-                        {
-                            b.Dispose();
-                            b = tmp;
-                        }
-                        else
-                        {
-                            tmp.Dispose();
-                        }
-                    }
-                }
-            }
+                    Color c;
+                    lock (locker) c = b.GetPixel(x, y);
+                    if ((c.R + c.G + c.B) / 3 > 0x60)
+                        lock (locker) b.SetPixel(x, y, Color.White);
+                    else
+                        lock (locker) b.SetPixel(x, y, Color.Black);
+                });
+            });
+
+            //for (int x = 0; x < b.Width; x++)
+            //{
+            //    for (int y = 0; y < b.Height; y++)
+            //    {
+            //        Color c = b.GetPixel(x, y);
+            //        if (c != Color.White)
+            //        {
+            //            int size = 0;
+            //            Bitmap tmp = (Bitmap)b.Clone();
+            //            CalcArea(ref tmp, x, y, ref size);
+            //            if (size < 60)
+            //            {
+            //                b.Dispose();
+            //                b = tmp;
+            //            }
+            //            else
+            //            {
+            //                tmp.Dispose();
+            //            }
+            //        }
+            //}
             return b;
         }
 
