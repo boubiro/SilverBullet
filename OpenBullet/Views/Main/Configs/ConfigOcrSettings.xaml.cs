@@ -28,11 +28,11 @@ namespace OpenBullet.Views.Main.Configs
         int lastSelectedIndex = -1;
         bool clicked;
 
-        public ConfigOcrSettings()
+        public ConfigOcrSettings(bool sendFilter = false)
         {
             InitializeComponent();
             DataContext = SB.MainWindow.ConfigsPage.CurrentConfig.Config.Settings;
-
+            if (sendFilter) return;
             blockOcr.Processors.ForEach(p => filterBox.Items.Add(p.Item1));
             OrigImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             OrigImage.WaitOnLoad = true;
@@ -94,6 +94,12 @@ namespace OpenBullet.Views.Main.Configs
         {
             try
             {
+                if (System.Windows.Forms.MessageBox.Show("Do you want to clear the list of filters?", "Warning",
+                    System.Windows.Forms.MessageBoxButtons.YesNo,
+                    System.Windows.Forms.MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.No)
+                {
+                    return;
+                }
                 GetSettings().FilterList.Clear();
                 scrollFilterTabControl.Visibility = Visibility.Collapsed;
                 ProcImage.Image = (Bitmap)OrigImage.Image.Clone();
@@ -371,7 +377,10 @@ namespace OpenBullet.Views.Main.Configs
                         break;
 
                     case "crop":
-                        SetCropLayer(--seletedIndex, new[] { "0", "0", "0", "0", "Percentage" });
+                        SetCropLayer(--seletedIndex, new[] { controlCropLayer.LeftTextBox.Text,
+                  controlCropLayer.TopTextBox.Text,
+                  controlCropLayer.RightTextBox.Text,
+                  controlCropLayer.BottomTextBox.Text, "Percentage" });
                         break;
 
                     case "morphology":
@@ -597,18 +606,21 @@ namespace OpenBullet.Views.Main.Configs
         private void SetCropLayer(int index, string[] defValues)
         {
             filterTabControl.SelectIndexByHeaderName(UserControlCropLayer.ControlName);
+
+            var value = filterLB.SelectedItem.ToString();
+
             var cropMode = CropMode.Percentage;
             try
             {
-                cropMode = GetFilterValues(index,
-              new string[] { "0", "0", "0", "0", "Percentage" })[4].ToEnum(CropMode.Percentage);
+                cropMode = GetFilterValues(index, value.Split(','))[4].ToEnum(CropMode.Percentage);
             }
             catch { }
-            controlCropLayer.CropModeBox.SelectedIndex = (int)cropMode;
-            var left = GetFilterValues(index, new string[] { "0", "0", "0", "0", cropMode.ToString() })[0];
-            var top = GetFilterValues(index, new string[] { "0", "0", "0", "0", cropMode.ToString() })[1];
-            var right = GetFilterValues(index, new string[] { "0", "0", "0", "0", cropMode.ToString() })[2];
-            var bottom = GetFilterValues(index, new string[] { "0", "0", "0", "0", cropMode.ToString() })[3];
+            var values = GetFilterValues(index, defValues);
+            var left = values[0];
+            var top = values[1];
+            var right = values[2];
+            var bottom = values[3];
+            controlCropLayer.CropModeBox.SelectedItem = cropMode;
             SetTextInTextBox(controlCropLayer.LeftTextBox, left);
             SetTextInTextBox(controlCropLayer.TopTextBox, top);
             SetTextInTextBox(controlCropLayer.RightTextBox, right);
@@ -1051,7 +1063,12 @@ namespace OpenBullet.Views.Main.Configs
                 float factorY = (float)ProcImage.Height / img.Height;
                 return img.GetPixel((int)(x / factorX), (int)(y / factorY));
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message, "ERROR"); return Color.Transparent; }
+            catch (Exception ex)
+            {
+                if (!ex.Message.Contains("Parameter must be positive and < Height"))
+                    SB.Logger.Log(ex.Message, LogLevel.Error, true);
+                return Color.Transparent;
+            }
         }
 
         private void pixelInfo_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
