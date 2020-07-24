@@ -42,7 +42,7 @@ namespace RuriLib.LS
             {
                 int i = 0;
                 bool isScript = false;
-                var compressed = Script.Split(new string[] { Environment.NewLine }, StringSplitOptions.None).ToList();
+                var compressed = Script.Split(new string[] { Environment.NewLine, "\n" }, StringSplitOptions.None).ToList();
                 while (i < compressed.Count - 1)
                 {
                     if (!isScript && BlockParser.IsBlock(compressed[i]) && (compressed[i + 1].StartsWith(" ") || compressed[i + 1].StartsWith("\t")))
