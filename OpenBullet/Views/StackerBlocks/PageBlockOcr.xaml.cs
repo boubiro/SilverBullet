@@ -9,6 +9,7 @@ using ImageProcessor.Imaging;
 using ImageProcessor.Imaging.MetaData;
 using Microsoft.Win32;
 using OpenBullet.Models;
+using OpenBullet.Views.Main.Configs;
 using OpenBullet.Views.UserControls.Filters;
 using RuriLib;
 using Tesseract;
@@ -315,7 +316,7 @@ namespace OpenBullet.Views.StackerBlocks
                         break;
 
                     case "crop":
-                        SetCropLayer(--seletedIndex, new[] { "0", "0", "0", "0", "Percentage" });
+                        SetCropLayer(--seletedIndex, new[] { controlCropLayer.LeftTextBox.Text,
                         break;
 
                     case "morphology":
@@ -530,24 +531,27 @@ namespace OpenBullet.Views.StackerBlocks
         private void SetCropLayer(int index, string[] defValues)
         {
             filterTabControl.SelectIndexByHeaderName(UserControlCropLayer.ControlName);
+
+            var value = filterLB.SelectedItem.ToString();
+
             var cropMode = CropMode.Percentage;
             try
             {
-                cropMode = GetFilterValues(index,
-              new string[] { "0", "0", "0", "0", "Percentage" })[4].ToEnum(CropMode.Percentage);
+                cropMode = GetFilterValues(index, value.Split(','))[4].ToEnum(CropMode.Percentage);
             }
             catch { }
-            controlCropLayer.CropModeBox.SelectedIndex = (int)cropMode;
-            var left = GetFilterValues(index, new string[] { "0", "0", "0", "0", cropMode.ToString() })[0];
-            var top = GetFilterValues(index, new string[] { "0", "0", "0", "0", cropMode.ToString() })[1];
-            var right = GetFilterValues(index, new string[] { "0", "0", "0", "0", cropMode.ToString() })[2];
-            var bottom = GetFilterValues(index, new string[] { "0", "0", "0", "0", cropMode.ToString() })[3];
+            var values = GetFilterValues(index, defValues);
+            var left = values[0];
+            var top = values[1];
+            var right = values[2];
+            var bottom = values[3];
+            controlCropLayer.CropModeBox.SelectedItem = cropMode;
             SetTextInTextBox(controlCropLayer.LeftTextBox, left);
             SetTextInTextBox(controlCropLayer.TopTextBox, top);
             SetTextInTextBox(controlCropLayer.RightTextBox, right);
             SetTextInTextBox(controlCropLayer.BottomTextBox, bottom);
+            controlCropLayer.CropModeBox.SelectedItem = cropMode;
         }
-
 
         private void SetMorphology(int index)
         {
@@ -792,6 +796,18 @@ namespace OpenBullet.Views.StackerBlocks
                 {
                     filterLB_SelectionChanged(filterLB, null);
                 }
+            }
+            catch { }
+        }
+
+        //send to ocr testing
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var item = filterLB.SelectedItem.ToString();
+                (new ConfigOcrSettings(true).DataContext as ConfigSettings)
+                    .FilterList.Add(item);
             }
             catch { }
         }

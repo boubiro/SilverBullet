@@ -14,25 +14,6 @@
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
-    <Page.Resources>
-        <ObjectDataProvider
-            x:Key="dataFromResizeLayer"
-            MethodName="GetValues"
-            ObjectType="{x:Type sys:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="imgProcessor:ResizeMode" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-        <ObjectDataProvider
-            x:Key="dataFromAnchorPosition"
-            MethodName="GetValues"
-            ObjectType="{x:Type sys:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="imgProcessor:AnchorPosition" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-    </Page.Resources>
-
     <Grid>
         <!--<Grid.Background>
             <SolidColorBrush
@@ -199,8 +180,12 @@
                         x:Name="btnAddFilter"
                         Grid.Column="2"
                         Margin="5,0,0,0"
-                        Click="btnAddFilter_Click"
-                        Content="Add" />
+                        Click="btnAddFilter_Click">
+                        <DockPanel>
+                            <iconPacks:PackIconMaterial Kind="FilterPlus" />
+                            <TextBlock Margin="4,0,0,0">Add</TextBlock>
+                        </DockPanel>
+                    </Button>
                 </Grid>
 
                 <Label Content="Filters:" />
@@ -241,30 +226,65 @@
                                         <iconPacks:PackIconUnicons Kind="FileUpload" />
                                     </MenuItem.Icon>
                                 </MenuItem>
+                                <MenuItem
+                                    Click="MenuItem_Click_3"
+                                    Header="Send To Ocr Testing">
+                                    <MenuItem.Icon>
+                                        <iconPacks:PackIconFontAwesome Kind="ShareSolid" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                             </ContextMenu>
                         </ListBox.ContextMenu>
                     </ListBox>
                     <StackPanel Grid.Column="1">
                         <Button
                             Name="btnfilterClone"
-                            Click="btnfilterClone_Click"
-                            Content="Clone" />
+                            Click="btnfilterClone_Click">
+                            <DockPanel>
+                                <iconPacks:PackIconFontAwesome Kind="CloneSolid" />
+                                <TextBlock Margin="4,0,0,0">Clone</TextBlock>
+                            </DockPanel>
+                        </Button>
                         <Button
                             Name="btnfilterUp"
-                            Click="btnfilterUp_Click"
-                            Content="Up" />
+                            Click="btnfilterUp_Click">
+                            <DockPanel>
+                                <iconPacks:PackIconIonicons
+                                    Margin="-10,0,0,0"
+                                    Kind="ArrowDropupMD" />
+                                <TextBlock Margin="9,0,0,0">Up</TextBlock>
+                            </DockPanel>
+                        </Button>
                         <Button
                             Name="btnfilterDown"
-                            Click="btnfilterDown_Click"
-                            Content="Down" />
+                            Click="btnfilterDown_Click">
+                            <DockPanel>
+                                <iconPacks:PackIconIonicons
+                                    Margin="0,1,0,0"
+                                    Kind="ArrowDropdownMD" />
+                                <TextBlock Margin="4,0,0,0">Down</TextBlock>
+                            </DockPanel>
+                        </Button>
                         <Button
                             Name="btnfilterRemove"
-                            Click="btnfilterRemove_Click"
-                            Content="Remove" />
+                            Click="btnfilterRemove_Click">
+                            <DockPanel>
+                                <iconPacks:PackIconMaterial
+                                    Margin="-2,0,0,0"
+                                    Kind="FilterMinus" />
+                                <TextBlock Margin="4,0,0,0">Remove</TextBlock>
+                            </DockPanel>
+                        </Button>
                         <Button
                             Name="btnfilterClear"
-                            Click="btnfilterClear_Click"
-                            Content="Clear" />
+                            Click="btnfilterClear_Click">
+                            <DockPanel>
+                                <iconPacks:PackIconMaterial
+                                    Margin="-8,0,0,0"
+                                    Kind="FilterRemove" />
+                                <TextBlock Margin="9,0,0,0">Clear</TextBlock>
+                            </DockPanel>
+                        </Button>
                     </StackPanel>
                 </Grid>
 
