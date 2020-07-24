@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="DialogSelectBots"
     d:DesignHeight="80"
-    Loaded="Page_Loaded"
     d:DesignWidth="300"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Grid>
@@ -19,8 +19,11 @@
 
         <DockPanel Grid.Row="0">
             <Label Content="Bots:" />
-            <TextBox KeyDown="botsNumberTextbox_KeyDown"
+            <TextBox
                 x:Name="botsNumberTextbox"
+                KeyDown="botsNumberTextbox_KeyDown"
+                MaxLength="3"
+                PreviewTextInput="botsNumberTextbox_PreviewTextInput"
                 Text="1" />
         </DockPanel>
         <Button
