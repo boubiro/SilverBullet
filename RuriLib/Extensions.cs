@@ -10,8 +10,8 @@ using System.Security.Authentication;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Threading;
-using OpenBullet.ImageProcessor;
 using RuriLib.Functions.Requests;
+using RuriLib.Models;
 
 namespace RuriLib
 {
@@ -380,7 +380,7 @@ namespace RuriLib
             return (u != null) && u.IsEnum;
         }
 
-        public static bool IsNullable(this Type type,out Type nullableType)
+        public static bool IsNullable(this Type type, out Type nullableType)
         {
             var ty = Nullable.GetUnderlyingType(type);
             nullableType = ty;
@@ -581,6 +581,15 @@ namespace RuriLib
         public static DateTime AddNanoseconds(this DateTime self, int nanoseconds)
         {
             return self.AddTicks((int)Math.Round(nanoseconds / (double)NanosecondsPerTick));
+        }
+    }
+
+    public static class WordlistExtensions
+    {
+        public static Wordlist Clone(this Wordlist wordlist)
+        {
+            return new Wordlist(wordlist.Name, wordlist.Path, wordlist.Type, wordlist.Purpose,
+                temporary: wordlist.Temporary, subwordlists: wordlist.SubWordlists);
         }
     }
 
