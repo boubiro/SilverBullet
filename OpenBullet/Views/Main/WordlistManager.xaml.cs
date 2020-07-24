@@ -1,4 +1,5 @@
 ﻿using OpenBullet.ViewModels;
+using OpenBullet.Views.Dialogs;
 using RuriLib.Models;
 using System;
 using System.ComponentModel;
@@ -44,7 +45,7 @@ namespace OpenBullet.Views.Main
         {
             (new MainDialog(new DialogAddWordlist(this), "Add Wordlist")).ShowDialog();
         }
-        
+
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
             SB.Logger.LogInfo(Components.WordlistManager, $"Deleting {wordlistListView.SelectedItems.Count} references from the DB");
@@ -112,7 +113,7 @@ namespace OpenBullet.Views.Main
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                foreach(var file in files.Where(x => x.EndsWith(".txt")).ToArray())
+                foreach (var file in files.Where(x => x.EndsWith(".txt")).ToArray())
                 {
                     try
                     {
@@ -136,5 +137,26 @@ namespace OpenBullet.Views.Main
             }
         }
         #endregion
+
+        private void editButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (wordlistListView.SelectedIndex == -1 ||
+                    wordlistListView.SelectedItem == null) return;
+
+                var dialogEditWordlist = new DialogEditWordlist((Wordlist)wordlistListView.SelectedItem);
+                new MainDialog(dialogEditWordlist, "Edit Wordlist").ShowDialog();
+                if (dialogEditWordlist.DialogResult == System.Windows.Forms.DialogResult.OK)
+                {
+                    vm.Update(dialogEditWordlist.WordList);
+                    vm.RefreshList();
+                }
+            }
+            catch (Exception ex)
+            {
+                SB.Logger.Log(ex.Message, RuriLib.LogLevel.Error, true);
+            }
+        }
     }
 }
