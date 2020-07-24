@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -24,24 +25,34 @@ namespace OpenBullet
             InitializeComponent();
             Caller = caller;
             foreach (string i in Enum.GetNames(typeof(ProxyType)))
-                if(i != "Chain") proxyTypeCombobox.Items.Add(i);
+                if (i != "Chain") proxyTypeCombobox.Items.Add(i);
             proxyTypeCombobox.SelectedIndex = 0;
         }
 
-        
         private void loadProxiesButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Proxy files | *.txt";
-            ofd.FilterIndex = 1;
-            ofd.ShowDialog();
-            locationTextbox.Text = ofd.FileName;
+            OpenFileDialog ofd = new OpenFileDialog()
+            {
+                Filter = "Proxy files | *.txt",
+                FilterIndex = 1,
+                Multiselect = true,
+            };
+            if (ofd.ShowDialog() == true)
+            {
+                for (var i = 0; i < ofd.FileNames.Length; i++)
+                {
+                    locationListBox.Items.Add(ofd.FileNames[i]);
+                }
+            }
         }
 
-        
         private void acceptButton_Click(object sender, RoutedEventArgs e)
         {
-            var fileName = locationTextbox.Text;
+
+            string[] fileNames;
+            if (locationListBox.SelectedItems == null)
+                fileNames = locationListBox.Items.OfType<string>().ToArray();
+            else fileNames = locationListBox.Items.OfType<string>().ToArray();
             List<string> lines = new List<string>();
 
             try
@@ -50,10 +61,17 @@ namespace OpenBullet
                 {
                     // File
                     case 0:
-                        if (fileName != string.Empty)
+                        if (fileNames.Length == 1)
                         {
-                            SB.Logger.LogInfo(Components.ProxyManager, $"Trying to load from file {fileName}");
-                            lines.AddRange(File.ReadAllLines(fileName).ToList());
+                            SB.Logger.LogInfo(Components.ProxyManager, $"Trying to load from file {fileNames[0]}");
+                            lines.AddRange(File.ReadAllLines(fileNames[0]));
+                        }
+                        else if (fileNames.Length > 1)
+                        {
+                            for (var i = 0; i < fileNames.Length; i++)
+                            {
+                                lines.AddRange(File.ReadAllLines(fileNames[i]));
+                            }
                         }
                         else
                         {
@@ -95,7 +113,7 @@ namespace OpenBullet
                 return;
             }
 
-            if(Caller.GetType() == typeof(ProxyManager))
+            if (Caller.GetType() == typeof(ProxyManager))
             {
                 ((ProxyManager)Caller).AddProxies(lines, (ProxyType)Enum.Parse(typeof(ProxyType), proxyTypeCombobox.Text), usernameTextbox.Text, passwordTextbox.Text);
             }
@@ -124,6 +142,51 @@ namespace OpenBullet
             pasteMode.Foreground = Utils.GetBrush("ForegroundMain");
             apiMode.Foreground = Utils.GetBrush("ForegroundMenuSelected");
             modeTabControl.SelectedIndex = 2;
+        }
+
+        //remove seleted path proxy
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try { locationListBox.Items.RemoveAt(locationListBox.SelectedIndex); } catch { }
+        }
+
+        private void Grid_MouseDown_1(object sender, MouseButtonEventArgs e)
+        {
+            try { locationListBox.Items.Clear(); } catch { }
+        }
+
+        private void locationListBox_DragEnter(object sender, DragEventArgs e)
+        {
+            try
+            {
+                if (e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop))
+                    e.Effects = System.Windows.DragDropEffects.Copy;
+            }
+            catch { }
+        }
+
+        private void locationListBox_Drop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                var locations = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop);
+                Task.Run(() =>
+                {
+                    for (var i = 0; i < locations.Length; i++)
+                    {
+                        try
+                        {
+                            var loc = locations[i];
+                            if (loc.EndsWith(".txt") && File.Exists(loc))
+                            {
+                                Dispatcher.Invoke(() => locationListBox.Items.Add(loc));
+                            }
+                        }
+                        catch { }
+                    }
+                });
+            }
+            catch { }
         }
     }
 }
