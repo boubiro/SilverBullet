@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -25,6 +26,7 @@ namespace OpenBullet
         private SortAdorner listViewSortAdorner = null;
         object Caller { get; set; }
         WordlistManagerViewModel vm = null;
+        Task myTask;
 
         public DialogSelectWordlist(object caller)
         {
@@ -150,6 +152,59 @@ namespace OpenBullet
         {
             if (e.Key == System.Windows.Input.Key.Enter)
                 searchButton_Click(this, null);
+        }
+
+        private void wordlistsListView_DragEnter(object sender, System.Windows.DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop))
+                e.Effects = System.Windows.DragDropEffects.Copy;
+        }
+
+        private void wordlistsListView_Drop(object sender, System.Windows.DragEventArgs e)
+        {
+            try
+            {
+                try { myTask?.Dispose(); } catch { }
+                if (addToWordlistsCheckBox.IsChecked.GetValueOrDefault())
+                {
+                    myTask = Task.Run(() =>
+                     {
+                         string[] wordlists = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop);
+                         foreach (string path in wordlists.Where(w => w.EndsWith(".txt")))
+                         {
+                             try
+                             {
+                                 var wordlist = WordlistManagerViewModel.FileToWordlist(path);
+                                 Dispatcher.Invoke(() => wordlist.RemoveDup = removeDupCheckBox.IsChecked.GetValueOrDefault());
+                                 Dispatcher.Invoke(() => vm.Add(wordlist));
+                             }
+                             catch { }
+                         }
+                     });
+                }
+                else
+                {
+                    var wordlistPath = ((string[])e.Data.GetData(System.Windows.DataFormats.FileDrop))[0];
+                    if (!wordlistPath.EndsWith(".txt") || !File.Exists(wordlistPath)) return;
+                    var wordlist = WordlistManagerViewModel.FileToWordlist(wordlistPath);
+                    wordlist.RemoveDup = removeDupCheckBox.IsChecked.GetValueOrDefault();
+                    ((Runner)Caller).SetWordlist(wordlist);
+
+                    ((MainDialog)Parent).Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                SB.Logger.Log(ex.Message, RuriLib.LogLevel.Error, true);
+            }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            ((MainDialog)Parent).Closing += delegate
+            {
+                try { myTask?.Dispose(); } catch { }
+            };
         }
     }
 }

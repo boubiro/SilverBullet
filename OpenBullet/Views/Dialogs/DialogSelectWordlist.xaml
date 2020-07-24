@@ -8,6 +8,7 @@
     Title="DialogSelectWordlist"
     d:DesignHeight="510"
     d:DesignWidth="410"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Grid
@@ -53,8 +54,11 @@
         <ListView
             x:Name="wordlistsListView"
             Grid.Row="1"
+            AllowDrop="True"
             Background="Transparent"
             BorderThickness="1"
+            DragEnter="wordlistsListView_DragEnter"
+            Drop="wordlistsListView_Drop"
             Foreground="{DynamicResource ForegroundMain}"
             ItemsSource="{Binding Path=WordlistsCollection}"
             SelectionMode="Extended"
