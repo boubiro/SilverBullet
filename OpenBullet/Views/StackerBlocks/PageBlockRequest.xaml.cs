@@ -3,7 +3,11 @@ using RuriLib;
 using RuriLib.Functions.Requests;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media.Animation;
 
 namespace OpenBullet.Views.StackerBlocks
 {
@@ -13,6 +17,7 @@ namespace OpenBullet.Views.StackerBlocks
     public partial class PageBlockRequest : Page
     {
         BlockRequest vm;
+        Task analyzeTask;
 
         public PageBlockRequest(BlockRequest block)
         {
@@ -59,7 +64,7 @@ namespace OpenBullet.Views.StackerBlocks
         {
             vm.Method = (Extreme.Net.HttpMethod)methodCombobox.SelectedIndex;
         }
-        
+
         private void requestTypeCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             vm.RequestType = (RequestType)requestTypeCombobox.SelectedIndex;
@@ -122,6 +127,74 @@ namespace OpenBullet.Views.StackerBlocks
         private void securityProtocolCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             vm.SecurityProtocol = (SecurityProtocol)((ComboBox)e.OriginalSource).SelectedIndex;
+        }
+
+        private void AnalyzeLoginPage_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var analyzeRenderTransform = analyzeIcon.RenderTransform;
+            var waitForAnalyze = (Storyboard)FindResource("WaitForAnalyze");
+            try
+            {
+                waitForAnalyze.Begin();
+                Tuple<string, string, string> tuple = null;
+                try { analyzeTask?.Dispose(); } catch { }
+                analyzeTask = Task.Run(() => tuple = vm.Analyze())
+                    .ContinueWith(_ =>
+                    {
+                        try
+                        {
+                            if (string.IsNullOrWhiteSpace(tuple.Item1) ||
+                            string.IsNullOrWhiteSpace(tuple.Item2))
+                            {
+                                Dispatcher.Invoke(() =>
+                                {
+                                    waitForAnalyze.Stop();
+                                    analyzeIcon.RenderTransform = analyzeRenderTransform;
+                                });
+                                SB.Logger.Log("URL or POSTDATA not found!", LogLevel.Error, true);
+                                return;
+                            }
+                            vm.Url = tuple.Item1;
+                            vm.PostData = tuple.Item2;
+                            /*if (!string.IsNullOrEmpty(tuple.Item3))
+                            {
+                                try
+                                {
+                                    vm.CustomHeaders.Remove(vm.CustomHeaders.Keys.FirstOrDefault(k => k == "Cookie"));
+                                }
+                                catch { }
+                                try
+                                {
+                                    vm.CustomHeaders.Add("Cookie", tuple.Item3);
+                                    Dispatcher.Invoke(() =>
+                                    {
+                                        var block = customHeadersRTB.Document.Blocks.FirstOrDefault(b => new TextRange(b.ContentStart, b.ContentEnd).Text.Split(':')[0].Trim().ToLower() == "cookie");
+                                        if (block != null) { customHeadersRTB.Document.Blocks.Remove(block); }
+                                        customHeadersRTB.AppendText("Cookie: " + tuple.Item3 + "\n");
+                                    });
+                                }
+                                catch { }
+                            }*/
+                            Dispatcher.Invoke(() =>
+                            {
+                                waitForAnalyze.Stop();
+                                analyzeIcon.RenderTransform = analyzeRenderTransform;
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                            waitForAnalyze.Stop();
+                            Dispatcher.Invoke(() => analyzeIcon.RenderTransform = analyzeRenderTransform);
+                            Dispatcher.Invoke(() => SB.Logger.Log(ex.Message, LogLevel.Error, true));
+                        }
+                    });
+            }
+            catch (Exception ex)
+            {
+                waitForAnalyze.Stop();
+                analyzeIcon.RenderTransform = analyzeRenderTransform;
+                SB.Logger.Log(ex.Message, LogLevel.Error, true);
+            }
         }
     }
 }
