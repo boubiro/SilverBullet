@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:OpenBullet.Views.Main.Tools"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     Title="WordlistTools"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -12,6 +13,26 @@
 
     <Grid>
         <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Label
+                    HorizontalAlignment="Left"
+                    Content="Location:" />
+                <TextBox
+                    x:Name="locTextBox"
+                    Grid.Column="1"
+                    IsReadOnly="True" />
+                <Button
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    Click="Button_Click">
+                    Load Wordlist
+                </Button>
+            </Grid>
             <!--<GroupBox
                 Margin="0,5,5,5"
                 HorizontalAlignment="Left"
@@ -45,67 +66,158 @@
                 </Grid>
             </GroupBox>-->
             <GroupBox
-                Margin="0,5,5,5"
                 HorizontalAlignment="Left"
-                Header="Remove Duplicate">
+                Header="Remove dups">
+                <DockPanel>
+                    <Button Click="Button_Click_2">Remove Duplicates</Button>
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center">
+                        Removed:
+                    </TextBlock>
+                    <TextBlock
+                        x:Name="removedDup"
+                        Margin="3,0,0,0"
+                        VerticalAlignment="Center">
+                        0
+                    </TextBlock>
+                </DockPanel>
+            </GroupBox>
+            <GroupBox
+                MinWidth="209"
+                HorizontalAlignment="Left"
+                Header="Splitter">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="auto" />
-                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <StackPanel>
-                        <DockPanel>
-                            <Label Content="Location:" />
-                            <TextBox
-                                Name="locationTextBox"
-                                Width="260"
-                                IsReadOnly="True" />
-                            <Button
-                                Click="Button_Click"
-                                Content="Load" />
-                        </DockPanel>
-                        <DockPanel>
-                            <TextBlock
-                                Name="loadedForDup"
-                                Margin="0,8,0,0"
-                                Text="Loaded: 0" />
-                            <Button
-                                Width="47"
-                                HorizontalAlignment="Right"
-                                Click="Button_Click_2">
-                                Start
-                            </Button>
-                        </DockPanel>
-                        <DockPanel>
-                            <TextBlock
-                                x:Name="removedDupTextBlock"
-                                Text="Removed: 0" />
-                            <Button
-                                Width="47"
-                                HorizontalAlignment="Right"
-                                Click="Button_Click_4">
-                                Save
-                            </Button>
-                        </DockPanel>
-                        <Button
-                            HorizontalAlignment="Right"
-                            Click="Button_Click_3">
-                            Clear
-                        </Button>
-                        <Button
-                            Width="116"
-                            Margin="0,-30,0,0"
-                            HorizontalAlignment="Left"
-                            Click="Button_Click_1">
-                            Send into wordlist
-                        </Button>
+
+                    <Button
+                        Grid.Row="0"
+                        Width="121"
+                        Click="Button_Click_1">
+                        Split
+                    </Button>
+
+                    <StackPanel
+                        Grid.Row="1"
+                        Margin="0,1,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBox
+                            Name="splitTextBox"
+                            Width="45"
+                            VerticalAlignment="Center"
+                            FontSize="15"
+                            Text=":"
+                            TextAlignment="Center" />
+                        <xctk:IntegerUpDown
+                            Name="splitIndex"
+                            Width="45"
+                            Height="30"
+                            VerticalAlignment="Center"
+                            Background="{DynamicResource BackgroundMain}"
+                            FontSize="15"
+                            Foreground="{DynamicResource ForegroundMain}"
+                            Minimum="1"
+                            TextAlignment="Center"
+                            Value="1" />
                     </StackPanel>
+
+                    <DockPanel Grid.Column="1">
+                        <TextBlock
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center">
+                            Splited:
+                        </TextBlock>
+                        <TextBlock
+                            Name="splited"
+                            Margin="3,0,0,0"
+                            VerticalAlignment="Center">
+                            0
+                        </TextBlock>
+                    </DockPanel>
                 </Grid>
             </GroupBox>
+            <GroupBox
+                MinWidth="209"
+                HorizontalAlignment="Left"
+                Header="Change Separator">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                        Grid.Row="0"
+                        Width="121"
+                        Click="Button_Click_3">
+                        Change
+                    </Button>
+                    <StackPanel
+                        Grid.Row="1"
+                        Margin="0,1,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBox
+                            Name="currentSepTextBox"
+                            Width="45"
+                            VerticalAlignment="Center"
+                            FontSize="15"
+                            Text=":"
+                            TextAlignment="Center" />
+                        <TextBox
+                            Name="newSepTextBox"
+                            Width="45"
+                            VerticalAlignment="Center"
+                            FontSize="15"
+                            Text=""
+                            TextAlignment="Center" />
+                    </StackPanel>
+
+                    <DockPanel Grid.Column="1">
+                        <TextBlock
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center">
+                            Changed:
+                        </TextBlock>
+                        <TextBlock
+                            Name="changed"
+                            Margin="3,0,0,0"
+                            VerticalAlignment="Center">
+                            0
+                        </TextBlock>
+                    </DockPanel>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Bottom">
+            <DockPanel Margin="3,0,0,5">
+                <TextBlock
+                    FontSize="13"
+                    Foreground="{DynamicResource ForegroundMain}">
+                    Loaded:
+                </TextBlock>
+                <TextBlock
+                    x:Name="loaded"
+                    Margin="5,0,0,0"
+                    FontSize="13"
+                    Foreground="{DynamicResource ForegroundMain}">
+                    0
+                </TextBlock>
+            </DockPanel>
         </StackPanel>
     </Grid>
 </Page>

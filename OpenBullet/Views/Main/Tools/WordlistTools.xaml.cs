@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Shapes;
-using IronPython.Runtime;
 using Microsoft.Win32;
-using RuriLib.Models;
 
 namespace OpenBullet.Views.Main.Tools
 {
@@ -23,7 +21,6 @@ namespace OpenBullet.Views.Main.Tools
 
         private string recognizeWordlistType, wordlistName;
         private List<string> wordList = new List<string>();
-        private List<string> remDupWordlist = new List<string>();
 
         //load
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -36,14 +33,15 @@ namespace OpenBullet.Views.Main.Tools
 
                 if (ofd.ShowDialog() == false) return;
 
-                locationTextBox.Text = ofd.FileName;
+                //    locationTextBox.Text = ofd.FileName;
                 wordlistName = System.IO.Path.GetFileNameWithoutExtension(ofd.FileName);
 
                 // Set the recognized wordlist type
                 try
                 {
+                    locTextBox.Text = ofd.FileName;
                     wordList.AddRange(File.ReadLines(ofd.FileName));
-                    loadedForDup.Text = $"Loaded: {wordList.Count}";
+                    loaded.Text = wordList.Count.ToString();
                     var first = wordList.First();
                     recognizeWordlistType = SB.Settings.Environment.RecognizeWordlistType(first);
                 }
@@ -60,77 +58,77 @@ namespace OpenBullet.Views.Main.Tools
         {
             try
             {
-                remDupWordlist = wordList.Distinct().ToList();
-                removedDupTextBlock.Text = $"Removed: {wordList.Count - remDupWordlist.Count}";
+                var newList = wordList.Distinct().ToList();
+                removedDup.Text = (wordList.Count - newList.Count).ToString();
+                SaveFile("Remove Duplicate", newList.ToArray());
             }
             catch (Exception ex) { }
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                wordList.Clear();
-                remDupWordlist.Clear();
-                loadedForDup.Text = $"Loaded: {wordList.Count}";
-                removedDupTextBlock.Text = "Removed: 0";
-            }
-            catch { }
-        }
-
-        //save
-        private void Button_Click_4(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var dialog = new SaveFileDialog()
-                {
-                    Filter = "Wordlist file | *.txt"
-                };
-                if (dialog.ShowDialog() == true)
-                {
-                    File.WriteAllLines(dialog.FileName, remDupWordlist.ToArray());
-                }
-            }
-            catch { }
-        }
-
-        private void Button_Click_5(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        //send into wordlist
+        //split
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (remDupWordlist.Count == 0 || wordList.Count == 0) return;
-
-                if (!Directory.Exists("Wordlists")) Directory.CreateDirectory("Wordlists");
-                var path = $"Wordlists\\{wordlistName}.txt";
-
-                if (File.Exists(path)) MessageBox.Show($"Wordlist is exists!\nSaved to {path}", "NOTICE");
-
-                int count = 1;
-                while (File.Exists(path))
+                var newList = wordList.Select(w =>
                 {
-                    var tempFileName = string.Format("{0}({1})", wordlistName, count++);
-                    path = System.IO.Path.Combine(path, tempFileName + ".txt");
-                }
-
-                File.WriteAllLines(path, remDupWordlist.ToArray());
-                var cwd = Directory.GetCurrentDirectory();
-                if (path.StartsWith(cwd)) path = path.Substring(cwd.Length + 1);
-                SB.WordlistManager.Add(
-                new Wordlist(wordlistName, path, recognizeWordlistType, string.Empty)
-                );
-
-                MessageBox.Show("Sended into wordlist successfully");
+                    try
+                    {
+                        return w.Split(new[] { splitTextBox.Text }, StringSplitOptions.RemoveEmptyEntries)
+                           [splitIndex.Value.GetValueOrDefault() - 1];
+                    }
+                    catch { return w; }
+                }).Where(w => !w.Contains(splitTextBox.Text))
+                .ToList();
+                splited.Text = newList.Count.ToString();
+                SaveFile("Splitter", newList.ToArray());
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "ERROR");
+                SB.Logger.Log(ex.Message, RuriLib.LogLevel.Error, true);
+            }
+        }
+
+        //change separator
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var reader = new StreamReader(locTextBox.Text);
+                var content = reader.ReadToEnd();
+                reader.Close();
+
+                content = Regex.Replace(content, currentSepTextBox.Text.Trim(), newSepTextBox.Text.Trim());
+                changed.Text = wordList.Count(w => w.Contains(currentSepTextBox.Text)).ToString();
+
+                var saveDialog = new SaveFileDialog()
+                {
+                    Title = "Change Separator",
+                    Filter = "Text File|*.txt"
+                };
+                if (saveDialog.ShowDialog() == true)
+                {
+                    StreamWriter writer = new StreamWriter(saveDialog.FileName);
+                    writer.Write(content);
+                    writer.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                SB.Logger.Log(ex.Message, RuriLib.LogLevel.Error, true);
+            }
+        }
+
+        private void SaveFile(string title, string[] contents)
+        {
+            var saveDialog = new SaveFileDialog()
+            {
+                Title = title,
+                Filter = "Text File|*.txt"
+            };
+            if (saveDialog.ShowDialog() == true)
+            {
+                File.WriteAllLines(saveDialog.FileName, contents);
             }
         }
     }
