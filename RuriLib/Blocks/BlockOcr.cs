@@ -8,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using AngleSharp.Text;
@@ -22,7 +21,6 @@ using RuriLib.Functions.EvalString;
 using RuriLib.Functions.Requests;
 using RuriLib.LS;
 using RuriLib.Models;
-using RuriLib.ViewModels;
 using Tesseract;
 
 namespace RuriLib
@@ -113,7 +111,7 @@ namespace RuriLib
             { (nameof(FastNlMeansDenoisingColored),nameof(FastNlMeansDenoisingColored), typeof(FastNlMeansDenoisingColoredLayer)) },
             { ("Threshold",nameof(ThresholdEx), typeof(ThresholdLayer)) },
             { (nameof(AdaptiveThreshold),nameof(AdaptiveThreshold), typeof(AdaptiveThresholdLayer)) },
-            { (nameof(ColorThreshold),"Threshold", typeof(int)) },
+            { (nameof(ColorThreshold),"Threshold", typeof(float)) },
             { (nameof(Transparency),nameof(Transparency), null) },
             { (nameof(Expend),nameof(Expend), null) },
             { (nameof(Soften),nameof(Soften), null) },
@@ -238,7 +236,7 @@ namespace RuriLib
         /// </summary>
         /// <param name="data">bot data</param>
         /// <returns>return text from captcha</returns>
-        public string[] GetOcr(BotData data)
+        public string[] GetOcr(BotData data, Pix cap = null)
         {
             var output = string.Empty;
 
@@ -257,7 +255,7 @@ namespace RuriLib
             Page process = null;
             try
             {
-                using (pix = GetOcrImage(data))
+                using (pix = cap ?? GetOcrImage(data))
                 {
                     if (pix == null) { data.Status = BotStatus.ERROR; throw new NullReferenceException("image not found"); }
 
@@ -303,6 +301,7 @@ namespace RuriLib
             }
             finally
             {
+                if (cap != null && !cap.IsDisposed) cap.Dispose();
                 if (process != null && !process.IsDisposed)
                 {
                     process.Dispose();
@@ -371,7 +370,7 @@ pixConverter:
                     }
                 }
 
-                Graphics g = Graphics.FromImage(bitmap);
+                var g = Graphics.FromImage(bitmap);
                 using (var process = tesseract.Process(ocr, pageSegMode))
                 {
                     output.Add(process.GetText());
@@ -447,7 +446,7 @@ pixConverter:
                 }
 
                 ProcessedImage = bitmap.Clone() as Bitmap;
-                g.Dispose();
+                g?.Dispose();
 
                 if (evaluateMath)
                 {
@@ -881,6 +880,7 @@ pixConverter:
                         break;
                 }
             }
+
             return this;
         }
 
@@ -1126,6 +1126,15 @@ pixConverter:
                    StringSplitOptions.RemoveEmptyEntries).ToArray<object>();
             }
             return value;
+        }
+
+        public Bitmap Base64ImageDecoder(string input)
+        {
+            byte[] imageBytes = Convert.FromBase64String(FixBase64ForImage(input));
+            using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
+            {
+                return (Bitmap)Bitmap.FromStream(ms);
+            }
         }
     }
 }
